@@ -1,0 +1,24 @@
+<div class="container">
+    <button id="quit-button" class="navigation" mat-raised-button color="primary" (click)="abandonGame()">
+        <mat-icon id="leave-icon">exit_to_app</mat-icon> Quitter
+    </button>
+    <p id="startTimer" *ngIf="isQuestionTransition">{{ transitionMessage }} dans {{ transitionCount }} secondes!</p>
+    <div id="top-page">
+        <app-progress-bar *ngIf="!showResults"></app-progress-bar>
+        <div class="question-container" *ngIf="!showResults">
+            <div id="question">{{ currentQuestion }} (+{{ currentQuestionScore }} points)</div>
+            <div id="pointage" *ngIf="!isOrganizer">Score: {{ score }}</div>
+        </div>
+        <app-button-response *ngIf="!showResults" (updateQuestionScore)="onUpdateQuestionScore($event)"></app-button-response>
+    </div>
+    <p *ngIf="!isOrganizer && isEvaluationPhase" id="evaluation-message">Évaluation des réponses en cours...</p>
+    <div>
+        <div *ngIf="isOrganizer && !showResults">
+            <app-histogram *ngIf="!isEvaluationPhase" [data]="histogramData" [correctAnswers]="correctAnswers"></app-histogram>
+            <app-player-list></app-player-list>
+        </div>
+        <app-chat-box></app-chat-box>
+        <app-end-result *ngIf="showResults"></app-end-result>
+    </div>
+    <p id="player-name">{{ playerName }}</p>
+</div>

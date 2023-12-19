@@ -1,0 +1,50 @@
+<div class="container">
+    <app-header title="Salle d'attente"></app-header>
+    <app-name-definition *ngIf="!playerName"></app-name-definition>
+
+    <div *ngIf="playerName">
+        <div class="room-pin" [cdkCopyToClipboard]="pin" (click)="notifyClipboardCopy()">
+            {{ pin }}
+        </div>
+
+        <div class="player-list">
+            <ul>
+                <div class="list-title">Liste de joueurs</div>
+                <div class="nom">
+                    <li *ngFor="let player of players">
+                        <div class="player" *ngIf="player.name !== 'Organisateur'">
+                            <button class="exclude-button" *ngIf="isOrganizer" (click)="banPlayer(player)">Exclure</button>
+                            {{ player.name }}
+                            <span *ngIf="player.name === playerName">(vous)</span>
+                            <button class="exclude-button" *ngIf="isOrganizer" (click)="toggleMute(player)">
+                                <span id="lock-text">{{ player.isAbleToChat ? 'Mute' : 'Unmute' }}</span>
+                            </button>
+                        </div>
+                    </li>
+                </div>
+                <p *ngIf="players.length === 1" id="no-player">Besoin de joueurs</p>
+            </ul>
+        </div>
+
+        <p id="startTimer" *ngIf="count > 0">La partie commence dans {{ count }} secondes !</p>
+
+        <div *ngIf="isOrganizer" id="nav">
+            <button mat-raised-button color="primary" (click)="toggleLobbyLock()" [disabled]="countdownStarted">
+                <i *ngIf="!isLocked" class="fa-solid fa-unlock fa-2xl"></i>
+                <i *ngIf="isLocked" class="fa-solid fa-lock fa-shake fa-2xl"></i>
+                <span id="lock-text">{{ isLocked ? 'Déverrouiller la salle' : 'Verrouiller la salle' }}</span>
+            </button>
+            <button
+                mat-raised-button
+                color="primary"
+                *ngIf="isOrganizer"
+                [disabled]="!isLocked || countdownStarted || players.length === 1"
+                (click)="startGameEmit()"
+            >
+                Start Game
+            </button>
+        </div>
+        <app-chat-box></app-chat-box>
+        <p id="player-name">{{ playerName }}</p>
+    </div>
+</div>

@@ -1,0 +1,18 @@
+@import url(../admin-jeu-page/admin-jeu-page.component.scss);
+
+#reset-button {
+    left: 35%;
+    background-color: #f75c1e;
+}
+
+.empty-list {
+    padding: 50px;
+    text-align: center;
+    font-size: 30px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    background-color: #523761c0;
+}
+
+.clickable:hover {
+    cursor: pointer;
+}

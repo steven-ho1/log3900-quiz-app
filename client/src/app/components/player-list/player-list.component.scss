@@ -1,0 +1,46 @@
+table {
+    border-collapse: collapse;
+    background-color: #f9c2e3;
+    position: absolute;
+    right: inherit;
+    bottom: inherit;
+}
+
+ng-container {
+    overflow-y: auto;
+}
+
+th,
+td {
+    border: 1px solid #8d3987;
+    padding: 8px;
+    text-align: left;
+    color: #fff;
+}
+
+th {
+    background-color: #8d3987;
+    color: #fff;
+}
+
+tr:nth-child(even) {
+    background-color: #390523;
+}
+
+tr:nth-child(odd) {
+    background-color: #4c0852;
+}
+
+.black {
+    color: black;
+    text-decoration: line-through;
+}
+.red {
+    color: red;
+}
+.yellow {
+    color: yellow;
+}
+.green {
+    color: green;
+}

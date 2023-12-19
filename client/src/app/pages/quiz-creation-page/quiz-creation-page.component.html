@@ -1,0 +1,74 @@
+<div class="container">
+    <app-header [title]="pageTitle"></app-header>
+    <form class="fields" [formGroup]="gameForm">
+        <label for="nameField">Nom du jeu</label><br />
+        <input
+            #titleInput
+            [ngClass]="{ incorrect: isNameDuplicate || isNameEmpty }"
+            id="nameField"
+            class="field"
+            type="text"
+            placeholder="Nom..."
+            name="title"
+            (keyup)="verifyName($event)"
+            [attr.maxlength]="maxTitleLength"
+            formControlName="title"
+            (keydown.enter)="titleInput.blur()"
+            autofocus
+        />
+        <br />
+        <span class="note incorrectField" *ngIf="isNameDuplicate">Nom déjà utilisé</span>
+        <span class="note incorrectField" *ngIf="isNameEmpty">Nom requis</span>
+        <span class="note" id="charCounterName">{{ gameForm.value.title.length }}/{{ maxTitleLength }}</span>
+        <br />
+        <br />
+        <label for="description">Description</label><br />
+        <textarea
+            [ngClass]="{ incorrect: isDescEmpty }"
+            class="field"
+            id="description"
+            type="text"
+            placeholder="Description..."
+            name="description"
+            [maxLength]="maxDescriptionLength"
+            formControlName="description"
+            (keyup)="verifyDesc($event)"
+        ></textarea>
+        <span class="note incorrectField" *ngIf="isDescEmpty">Description requise</span>
+        <br />
+        <span class="note" id="charCounterDesc">{{ gameForm.value.description.length }}/{{ maxDescriptionLength }}</span
+        ><br />
+        <label for="time_field">Temps alloué pour les questions à choix multiples (QCM) (10 à 60 secondes)</label><br />
+        <input
+            #durationInput
+            [ngClass]="{ incorrect: isTimerInvalid }"
+            class="field"
+            id="time_field"
+            type="number"
+            name="time"
+            value="qcmTime"
+            formControlName="duration"
+            min="10"
+            max="60"
+            (keydown.enter)="durationInput.blur()"
+            (change)="verifyTimer($event)"
+        />
+        <p id="units">secondes</p>
+        <br /><span class="note incorrectField" *ngIf="isTimerInvalid">Temps invalide</span>
+        <p class="note">Note: Les questions à réponse libre (QRL) ont un temps fixé à 60 secondes.</p>
+        <button type="button" class="questions-button" mat-raised-button color="primary" (click)="accessQuestionCreation()">
+            Modifier la liste de questions
+        </button>
+        <button type="button" mat-raised-button color="primary" class="navigation" [routerLink]="adminRoute">Retourner</button>
+        <button
+            (click)="onSubmit()"
+            type="submit"
+            mat-raised-button
+            color="primary"
+            class="navigation"
+            [disabled]="!(gameForm.valid && !isNameDuplicate && !isNameEmpty && !isDescEmpty && !isTimerInvalid && hasQuestions())"
+        >
+            Soumettre
+        </button>
+    </form>
+</div>

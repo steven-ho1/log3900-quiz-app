@@ -1,0 +1,13 @@
+<form id="name" [formGroup]="nameForm" (ngSubmit)="onSubmit()">
+    <div>
+        <mat-form-field>
+            <mat-label>Nom de joueur</mat-label>
+            <input #nameInput formControlName="name" matInput placeholder="Nom" maxlength="20" />
+            {{ nameInput.focus() }}
+            <p class="error" *ngIf="nameIsInvalid">{{ serverMessage }}</p>
+        </mat-form-field>
+        <p id="name-length">{{ nameForm.value.name.length }}/{{ maxNameLength }}</p>
+    </div>
+
+    <button type="submit" mat-raised-button color="primary" class="button" [disabled]="nameForm.invalid">Soumettre</button>
+</form>

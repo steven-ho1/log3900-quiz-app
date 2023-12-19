@@ -1,0 +1,220 @@
+.container {
+    background-image: url('../../../assets/backgrounds/theater-podium.jpg');
+    background-size: 100% 100%;
+    width: 100%;
+    height: 100%;
+}
+
+.center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#choices {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    justify-content: center;
+}
+
+h2 {
+    margin-top: 2%;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+}
+
+form {
+    height: 100%;
+    width: 100%;
+    position: relative;
+}
+
+.field {
+    display: block;
+}
+
+.question-field {
+    width: 500px;
+}
+
+textarea {
+    resize: none;
+}
+
+.value-field {
+    width: 150px;
+}
+
+#answer-list {
+    width: 60%;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    display: flex;
+    flex-direction: column;
+}
+
+.answer-box {
+    display: flex;
+    flex-direction: row;
+    font-size: 10px;
+    padding: 0.5% 2%;
+}
+
+.answer-box:not(:last-child) {
+    border-bottom: solid black 1px;
+}
+
+.left-section {
+    width: 77%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.handle {
+    cursor: move;
+}
+
+.answer-text {
+    padding-left: 4%;
+    font-size: medium;
+}
+
+// Source: https://material.angular.io/cdk/drag-drop/overview
+.cdk-drag-preview {
+    box-sizing: border-box;
+    border-radius: 4px;
+    box-shadow:
+        0 5px 5px -3px rgba(0, 0, 0, 0.2),
+        0 8px 10px 1px rgba(0, 0, 0, 0.14),
+        0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+.cdk-drag-placeholder {
+    opacity: 40%;
+}
+
+.cdk-drag-animating {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.answer-type {
+    width: 10%;
+}
+
+.right-section {
+    width: 23%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.right-section div:hover {
+    background: rgb(white, 0.5);
+    border-radius: 100%;
+    font-size: 105%;
+    cursor: pointer;
+}
+
+.right-section div:active {
+    background: rgb(#3f51b5, 0.5);
+    border-radius: 100%;
+}
+
+#choices input:invalid:not(:focus) {
+    border: 1px solid red;
+    background-color: #f8baba;
+}
+
+button.answer-creation {
+    padding: 1% 2%;
+    border: 0;
+}
+
+button.question-management:hover:not(:disabled) {
+    background: lightgrey;
+}
+
+button.question-management:active:not(:disabled) {
+    background: grey;
+}
+
+span {
+    padding-left: 2%;
+}
+
+.text-color {
+    color: white;
+}
+
+#nav {
+    position: absolute;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    bottom: 12%;
+}
+
+#nav button:nth-child(1) {
+    color: #3f51b5;
+    background-color: #eeeeee;
+    font-weight: bold;
+}
+
+#nav button:nth-child(1):hover {
+    background: lightgrey;
+}
+
+#nav button:nth-child(1):active {
+    background: grey;
+}
+
+#nav button {
+    width: 15%;
+}
+
+.error {
+    padding: 0;
+    width: fit-content;
+    color: red;
+    font-size: 14px;
+    background-color: rgb(red, 0.1);
+}
+
+.align {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+#delete-button {
+    height: 100%;
+    padding: 1% 2%;
+    border: 1px solid rgb(black, 0.5);
+    display: flex;
+    align-items: center;
+}
+
+#save-button:disabled {
+    color: #c0c0c0;
+    background-color: #808080;
+}
+
+.choice-error {
+    position: absolute;
+    right: 2%;
+}
+
+p#question-length {
+    position: relative;
+    color: white;
+    padding: 0;
+    margin: 0;
+    text-align: right;
+}

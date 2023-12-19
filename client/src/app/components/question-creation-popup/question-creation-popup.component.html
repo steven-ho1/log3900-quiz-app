@@ -1,0 +1,113 @@
+<div class="container">
+    <form class="center" [formGroup]="questionForm" (ngSubmit)="onSubmit()">
+        <h2>Ajout d'une question</h2>
+
+        <div>
+            <div>
+                <mat-form-field class="field question-field">
+                    <mat-label>Texte de la question</mat-label>
+                    <textarea
+                        #questionInput
+                        (keydown.enter)="questionInput.blur()"
+                        matInput
+                        [maxlength]="maxQuestionLength"
+                        formControlName="text"
+                        placeholder="Question..."
+                        autofocus
+                        rows="5"
+                    >
+                    </textarea>
+                    <span class="error" *ngIf="isQuestionEmpty()">Le texte est vide.</span>
+                </mat-form-field>
+                <p id="question-length">{{ questionForm.value.text.length }}/{{ maxQuestionLength }}</p>
+            </div>
+
+            <div class="align">
+                <mat-form-field class="field value-field">
+                    <mat-label>Points</mat-label>
+                    <input
+                        #pointsInput
+                        formControlName="points"
+                        matInput
+                        id="score"
+                        type="number"
+                        min="10"
+                        max="100"
+                        step="10"
+                        (keydown.enter)="pointsInput.blur()"
+                    />
+                </mat-form-field>
+                <span class="error" *ngIf="questionForm.controls['points'].invalid">{{ showPointsError() }}</span>
+            </div>
+
+            <mat-slide-toggle [checked]="isQcm()" color="primary" (click)="toggleQuestionType()">
+                <span class="text-color">{{ questionType }}</span>
+            </mat-slide-toggle>
+        </div>
+
+        <div id="choices">
+            <div *ngIf="isQcm()" formArrayName="choices" cdkDropList id="answer-list" (cdkDropListDropped)="drop($event)">
+                <div
+                    [formGroupName]="i"
+                    class="answer-box"
+                    [ngStyle]="setAnswerStyle(choice.value.isCorrect)"
+                    *ngFor="let choice of choices.controls; index as i"
+                    cdkDrag
+                >
+                    <div class="left-section">
+                        <i class="handle fa-solid fa-bars fa-2xl" cdkDragHandle></i>
+                        <div class="answer-text">
+                            {{ i + 1 }}.
+                            <input
+                                #choiceInput
+                                id="choiceInput"
+                                placeholder="Choix de réponse"
+                                type="text"
+                                size="50"
+                                formControlName="text"
+                                (keyup)="verifyChoice()"
+                                (keydown.enter)="choiceInput.blur()"
+                                required
+                                [maxlength]="maxAnswerLength"
+                            />
+                        </div>
+                    </div>
+
+                    <div class="right-section">
+                        <div class="toggle-icon">
+                            <mat-slide-toggle class="choice-correctness" color="primary" formControlName="isCorrect">{{
+                                choice.value.isCorrect ? 'Bon' : 'Mauvais'
+                            }}</mat-slide-toggle>
+                        </div>
+
+                        <button (click)="deleteChoice(i)" id="delete-button" class="question-management" [disabled]="!canDeleteAnswer()">
+                            <i class="fa-solid fa-xmark fa-2xl"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <button type="button" (click)="addChoice(true)" *ngIf="canAddAnswer()" class="answer-creation question-management">
+                    <i class="fa-solid fa-plus fa-xl"></i>
+                    <span>Ajouter un choix de réponse</span>
+                </button>
+            </div>
+            <div class="error choice-error">
+                <p *ngIf="!hasMinimumGoodChoices() && choices.enabled">{{ showCorrectnessError() }}</p>
+                <p *ngIf="choiceDuplicate && choices.enabled">Choix doivent être uniques</p>
+            </div>
+        </div>
+
+        <div id="nav">
+            <button type="button" (click)="closeQuestionCreator()" mat-raised-button color="primary">Annuler</button>
+            <button
+                type="submit"
+                id="save-button"
+                mat-raised-button
+                color="primary"
+                [disabled]="!questionForm.valid || !hasMinimumGoodChoices() || choiceDuplicate"
+            >
+                Enregistrer
+            </button>
+        </div>
+    </form>
+</div>

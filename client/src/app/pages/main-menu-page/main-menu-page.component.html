@@ -1,0 +1,26 @@
+<div class="container justified">
+    <img src="./assets/backgrounds/logo.png" alt="Logo Projet" class="logo" />
+    <section id="server-message" class="justified">
+        <form [formGroup]="pinForm" (ngSubmit)="onSubmit()" class="justified">
+            <div id="joining">
+                <button type="submit" mat-raised-button color="primary" [disabled]="pinForm.invalid">Joindre une partie</button>
+                <mat-form-field id="pin-input">
+                    <mat-label>PIN de jeu</mat-label>
+                    <input #pinInput formControlName="pin" matInput maxlength="4" placeholder="1234" />
+                    <p class="error" *ngIf="pinContainsNonNumeric()">Entrez un PIN à 4 chiffres</p>
+                </mat-form-field>
+                <p id="server-error-message" class="error">{{ serverErrorMessage }}</p>
+            </div>
+            <button type="button" mat-raised-button color="primary" [routerLink]="gameCreationRoute">Créer une partie</button>
+            <button type="button" mat-raised-button color="primary" (click)="adminLogin()">Administrer les jeux</button>
+        </form>
+    </section>
+
+    <footer class="footer-item">
+        <h4 class="team-name">Équipe 106</h4>
+        <p>
+            <span>Sofiane Mouici, </span> <span>Noah Namoko, </span> <span>Ralph El Khoury, </span> <span>Ho Xuan Steven Phuong, </span>
+            <span>Eugène Vachon</span>
+        </p>
+    </footer>
+</div>

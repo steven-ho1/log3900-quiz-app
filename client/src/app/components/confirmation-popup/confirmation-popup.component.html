@@ -1,0 +1,10 @@
+<div id="container">
+    <h1 mat-dialog-title id="title">{{ data.title }}</h1>
+    <div mat-dialog-content>
+        <p>{{ data.description }}</p>
+    </div>
+    <div (keydown.enter)="$event.preventDefault()" mat-dialog-actions align="center" class="dialog-actions">
+        <button type="button" mat-raised-button color="primary" (click)="confirm()">{{ data.primaryAction }}</button>
+        <button mat-dialog-close type="button" mat-raised-button>Annuler</button>
+    </div>
+</div>

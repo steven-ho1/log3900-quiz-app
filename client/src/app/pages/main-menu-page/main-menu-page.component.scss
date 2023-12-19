@@ -1,0 +1,102 @@
+.container {
+    min-height: 100vh;
+    height: auto;
+    background-image: url(../../../assets/backgrounds/dark-theater-stage.jpg);
+    background-size: cover;
+}
+
+.justified {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+div#joining {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    position: relative;
+}
+
+#pin-input {
+    width: 150px;
+    position: absolute;
+    right: -45%;
+    top: 25%;
+}
+
+#joining > button:valid {
+    background-color: #f75c1e;
+}
+
+.error {
+    padding: 0;
+    width: fit-content;
+    color: red;
+    font-size: 10px;
+}
+
+button {
+    text-align: center;
+    font-size: 30px;
+    border-radius: 30px;
+    padding: 10% 10%;
+    border: 5px solid black;
+    margin: 4% 4%;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    width: 350px;
+}
+
+button:disabled {
+    border: 5px solid gray;
+    background-color: silver;
+    color: gray;
+    pointer-events: none;
+}
+
+button:hover {
+    transform: scale(0.95);
+    background-color: #0f0a36;
+}
+
+.team-name {
+    margin-top: 0.25em;
+    margin-bottom: 0.25em;
+    color: darkcyan;
+    background-color: rgb(black, 0.4);
+    width: 100px;
+    margin-left: 45%;
+}
+
+.header-item {
+    justify-content: center;
+    text-align: center;
+}
+
+.footer-item {
+    text-align: center;
+}
+
+.footer-item p {
+    color: whitesmoke;
+}
+
+.server-message {
+    justify-content: center;
+    width: 20%;
+    min-width: min-content;
+}
+
+.logo {
+    margin-top: 5%;
+    width: 32%;
+}
+
+#server-error-message {
+    position: fixed;
+    width: 300px;
+    right: 6%;
+    font-size: 14px;
+    background-color: rgb(black, 0.2);
+}

@@ -1,0 +1,33 @@
+@import url(../../pages/main-menu-page/main-menu-page.component.scss);
+
+#name {
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+button {
+    padding: 1%;
+    font-size: 25px;
+    margin: 0;
+    width: 200px;
+}
+
+#name-length {
+    position: relative;
+    bottom: 10px;
+    color: white;
+    padding: 0;
+    margin: 0;
+    text-align: right;
+}
+
+.error {
+    padding: 0;
+    width: fit-content;
+    color: red;
+    font-size: 12px;
+    background-color: rgb(red, 0.1);
+}

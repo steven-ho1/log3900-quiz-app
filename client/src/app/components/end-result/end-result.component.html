@@ -1,0 +1,37 @@
+<div class="table-container">
+    <span>
+        <h1>Résultats</h1>
+    </span>
+    <span>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nom du joueur</th>
+                    <th>Score</th>
+                    <th>Bonus</th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let player of players">
+                    <tr *ngIf="player.name !== 'Organisateur'">
+                        <td>
+                            <a>{{ player.name }}</a>
+                        </td>
+                        <td>
+                            <a>{{ player.score }}</a>
+                        </td>
+                        <td>
+                            <a>{{ player.bonusTimes }}</a>
+                        </td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+    </span>
+    <h1 id="histogramTitle">{{ currentQuestion }}</h1>
+    <app-histogram [data]="allHistogramData[currentQuestionId]" [correctAnswers]="correctAnswers"></app-histogram>
+    <div class="histogram-navigation">
+        <button (click)="previousQuestion()">Précédent</button>
+        <button (click)="nextQuestion()">Suivant</button>
+    </div>
+</div>

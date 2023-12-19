@@ -1,0 +1,17 @@
+<!-- histogram.component.html -->
+<ul *ngIf="data">
+    <li *ngFor="let key of object.keys(data)" class="list-item">
+        <div class="text-wrapper">
+            <span
+                class="text"
+                [ngClass]="{
+                    'correct-answer': correctAnswers.includes(key) && isCurrentQuestionQcm,
+                    'incorrect-answer': !correctAnswers.includes(key) && isCurrentQuestionQcm
+                }"
+            >
+                {{ key }} ({{ data[key] }} votes):
+            </span>
+        </div>
+        <div class="bar" [style.width]="data[key] * 15 + 'px'"></div>
+    </li>
+</ul>

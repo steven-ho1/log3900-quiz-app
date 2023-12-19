@@ -1,0 +1,71 @@
+#import-state,
+form {
+    background-image: url('../../../assets/backgrounds/theater-podium.jpg');
+    background-size: 100% 100%;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h2,
+p {
+    color: white;
+}
+
+#import-state > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.errors {
+    width: 100%;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: auto;
+}
+
+.error {
+    width: fit-content;
+    color: red;
+    font-size: 14px;
+    background-color: rgb(red, 0.2);
+}
+
+#submit:disabled {
+    color: #c0c0c0;
+    background-color: #808080;
+}
+
+.nav {
+    position: absolute;
+    width: 70%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    bottom: 10%;
+}
+
+.nav button:nth-child(1) {
+    color: #3f51b5;
+    background-color: #eeeeee;
+    font-weight: bold;
+}
+
+.nav button:nth-child(1):hover {
+    background: lightgrey;
+}
+
+.nav button:nth-child(1):active {
+    background: grey;
+}
+
+.nav button {
+    width: 20%;
+}

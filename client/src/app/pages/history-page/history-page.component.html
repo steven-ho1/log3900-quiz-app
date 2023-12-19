@@ -1,0 +1,39 @@
+<div class="container">
+    <app-header [title]="'Historique des parties'"></app-header>
+    <div class="fields" id="history-table">
+        <table *ngIf="!listIsEmpty(); else emptyList">
+            <thead>
+                <tr>
+                    <th class="clickable" (click)="sortName()">Nom du jeu {{ arrowName }}</th>
+                    <th class="clickable" (click)="sortDate()">Date {{ arrowDate }}</th>
+                    <th>Nombre de joueurs</th>
+                    <th>Meilleur score</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let game of games">
+                    <td>
+                        <p>{{ game.name }}</p>
+                    </td>
+                    <td>
+                        <p>{{ game.date }}</p>
+                    </td>
+                    <td>
+                        <p>{{ game.numberPlayers }}</p>
+                    </td>
+                    <td>
+                        <p>{{ game.bestScore }}</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <ng-template #emptyList>
+            <div class="empty-list">Aucune partie n'a été jouée récemment</div>
+        </ng-template>
+    </div>
+    <button type="button" mat-raised-button color="primary" class="navigation" [routerLink]="adminRoute">Retourner</button>
+
+    <button mat-raised-button color="primary" *ngIf="!listIsEmpty()" class="adminbutton" id="reset-button" (click)="resetList()">
+        Réinitialiser la liste
+    </button>
+</div>
