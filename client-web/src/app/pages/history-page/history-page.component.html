@@ -1,0 +1,39 @@
+<div class="container" [ngStyle]="backgroundImage">
+    <app-header [title]="currentLanguage === 'FR' ? 'Historique des parties' : 'Game history'"></app-header>
+    <div class="fields" id="history-table">
+        <table *ngIf="!listIsEmpty(); else emptyList">
+            <thead>
+                <tr>
+                    <th class="clickable" (click)="sortName()">{{ 'QUIZ NAME' | translate }} {{ arrowName }}</th>
+                    <th class="clickable" (click)="sortDate()">Date {{ arrowDate }}</th>
+                    <th>{{ 'NUMBER OF PLAYERS' | translate }}</th>
+                    <th>{{ 'BEST SCORE' | translate }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let game of games">
+                    <td>
+                        <p>{{ game.name }}</p>
+                    </td>
+                    <td>
+                        <p>{{ game.date }}</p>
+                    </td>
+                    <td>
+                        <p>{{ game.numberPlayers }}</p>
+                    </td>
+                    <td>
+                        <p>{{ game.bestScore }}</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <ng-template #emptyList>
+            <div class="empty-list">{{ 'NO GAME' | translate }}</div>
+        </ng-template>
+    </div>
+    <button type="button" mat-raised-button color="primary" class="btn navigation" [routerLink]="adminRoute">{{ 'RETURN' | translate }}</button>
+
+    <button mat-raised-button color="primary" *ngIf="!listIsEmpty()" class="btn adminbutton" id="reset-button" (click)="resetList()">
+        {{ 'RESET LIST' | translate }}
+    </button>
+</div>

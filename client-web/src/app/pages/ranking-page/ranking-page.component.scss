@@ -1,0 +1,95 @@
+.container {
+    min-height: 100vh;
+    height: auto;
+    background-size: cover;
+    padding-bottom: 100px;
+}
+
+.leaderboard-section {
+    margin-top: 20px;
+    padding: 0 30px;
+}
+
+.leaderboard-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.leaderboard-table th,
+.leaderboard-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+
+.leaderboard-table th {
+    cursor: pointer;
+    background-color: #d9d9d9;
+}
+
+.leaderboard-table tr:not(.isPlayer) {
+    background-color: #f3f3f3;
+}
+
+.leaderboard-table tr:hover {
+    background-color: #dcdcdc;
+}
+
+.leaderboard-table th:hover {
+    background-color: #f0f0f0;
+}
+
+.isPlayer {
+    background-color: aqua;
+}
+
+.friend-option-container {
+    margin: 30px 0;
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 60px;
+}
+
+.friend-option-container button {
+    border: 5px solid black;
+    padding: 25px 15px;
+    border-radius: 15px;
+
+    &:hover {
+        transform: scale(0.95);
+        background-color: #0f0a36;
+    }
+}
+
+.friend-option-container label {
+    color: whitesmoke;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.empty-list {
+    margin-top: 150px;
+    color: whitesmoke;
+    text-align: center;
+    font-size: 24px;
+}
+
+.loader {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.username {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.avatar {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    object-fit: cover;
+}

@@ -1,0 +1,10 @@
+<div class="auth-layout">
+    <div class="auth-form-container flex-column">
+        <app-auth-header [heading]="currentLanguage === 'FR' ? 'Se connecter' : 'Sign in'"></app-auth-header>
+        <app-login-form></app-login-form>
+
+        <hr class="login__separator" />
+
+        <button class="auth-btn" mat-raised-button routerLink="/register" type="button">{{ 'ACCOUNT CREATION' | translate }}</button>
+    </div>
+</div>

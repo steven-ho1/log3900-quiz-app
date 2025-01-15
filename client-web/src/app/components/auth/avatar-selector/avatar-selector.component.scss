@@ -1,0 +1,70 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.avatar-selector__avatar-list {
+    display: flex;
+    justify-content: space-evenly;
+    max-width: 15rem;
+    overflow-x: auto;
+}
+
+.avatar-selector__avatar-item {
+    cursor: pointer;
+    padding: 3px;
+
+    &:hover {
+        background-color: rgb(180, 180, 180);
+    }
+}
+
+.avatar-selector__avatar-image {
+    width: 3rem;
+    height: auto;
+}
+
+.avatar-selector__avatar-item.selected {
+    background-color: #a4a4a4;
+}
+
+.avatar-selector__separator {
+    margin: 0.5rem 0;
+    width: 75%;
+    border-color: rgba(black, 0.3);
+}
+
+.avatar-selector__upload-button-container {
+    width: 15rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.avatar-selector__file-name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.avatar-selector__max-file-size {
+    font-size: small;
+}
+
+.error {
+    color: red;
+    font-size: small;
+    font-weight: bold;
+}
+
+.avatar-selector__choice-section {
+    margin-top: 1rem;
+}
+
+.avatar-selector__choice {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    object-fit: cover; /* conserve le ratio de l'image */
+}

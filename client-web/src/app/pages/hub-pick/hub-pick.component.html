@@ -1,0 +1,64 @@
+<div class="container" [ngStyle]="backgroundImage">
+    <app-header [title]="currentLanguage === 'FR' ? 'Sélection de partie' : 'Game selection'"></app-header>
+
+    <p class="info-style wallet">{{ wallet | currency }}</p>
+
+    <div class="loader" *ngIf="isLoading">
+        <app-loader></app-loader>
+    </div>
+
+    <div class="fields" id="game-table">
+        <p class="info-style">{{ 'ENTRY FEE WARNING' | translate }}</p>
+        <p *ngIf="lobbies.length === 0 && !isLoading" class="no-lobbies">{{ 'NO ACTIVE GAMES' | translate }}</p>
+        <table *ngIf="lobbies.length !== 0 && !isLoading">
+            <thead>
+                <tr>
+                    <th>Pin</th>
+                    <th>{{ 'GAME' | translate }}</th>
+                    <th>{{ 'Status' | translate }}</th>
+                    <th>{{ 'PLAYERS' | translate }}</th>
+                    <th>{{ 'OBSERVERS' | translate }}</th>
+                    <th>{{ 'JOIN' | translate }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let lobby of lobbies" [ngClass]="{ 'friends-only': lobby.friendOnly }">
+                    <td class="nom-jeu">{{ lobby.pin }}</td>
+                    <td class="nom-jeu">
+                        <div class="game-details-container">
+                            <div>
+                                <div>{{ lobby.game?.title }}</div>
+                                <div class="description-jeu">{{ lobby.game?.description }}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="logo-container">
+                        <span *ngIf="lobby.started">{{ 'ONGOING' | translate }}</span>
+                        <span *ngIf="!lobby.started && lobby.isLocked">{{ 'LOCKED' | translate }}</span>
+                        <span *ngIf="!lobby.started && !lobby.isLocked">{{ 'WAITING' | translate }}</span>
+                    </td>
+                    <td class="logo-container">{{ getPlayerCount(lobby) - 1 }} / 20</td>
+
+                    <td class="logo-container">{{ getObserverCount(lobby) }} / 20</td>
+                    <td class="logo-container join" (click)="lobby.started ? observeGame(lobby) : joinGame(lobby)">
+                        <mat-icon *ngIf="lobby.started">visibility</mat-icon>
+                        <mat-icon *ngIf="!lobby.started">arrow_right_alt</mat-icon>
+                        <p class="entry-fee">{{ 'ENTRY FEE' | translate }} : {{ lobby.entryFee }}$</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <form [formGroup]="pinForm" (ngSubmit)="onSubmit()" class="form-pin">
+        <button type="submit" mat-raised-button color="primary" class="joinbutton" [disabled]="pinForm.invalid">
+            {{ 'GAME JOINING' | translate }}
+        </button>
+        <mat-form-field id="pin-input" subscriptSizing="dynamic">
+            <mat-label>PIN</mat-label>
+            <input #pinInput formControlName="pin" matInput maxlength="4" placeholder="1234" />
+            <p class="error" *ngIf="pinContainsNonNumeric()">{{ 'ENTER PIN' | translate }}</p>
+        </mat-form-field>
+        <div class="server-error">{{ serverErrorMessage }}</div>
+    </form>
+</div>

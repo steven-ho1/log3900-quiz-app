@@ -1,0 +1,80 @@
+<div class="table-container">
+    <span>
+        <h1>{{ 'RESULTS' | translate }}</h1>
+    </span>
+    <span>
+        <table>
+            <thead>
+                <tr>
+                    <th>{{ 'PLAYER' | translate }}</th>
+                    <th>Score</th>
+                    <th>Bonus</th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let player of players">
+                    <tr *ngIf="player.name !== 'Organisateur' && player.role !== 'observer'">
+                        <td>
+                            <a>{{ player.name }}</a>
+                        </td>
+                        <td>
+                            <a>{{ player.score }}</a>
+                        </td>
+                        <td>
+                            <a>{{ player.bonusTimes }}</a>
+                        </td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+    </span>
+</div>
+<div class="evaluation-container" *ngIf="!isOrganizer && !hasEvaluated&& !isObserver">
+    <h3>{{ 'RATE' | translate }}</h3>
+    <mat-form-field appearance="outline">
+        <mat-label>{{ 'RATING' | translate }}</mat-label>
+        <mat-select [(ngModel)]="rating">
+            <mat-option *ngFor="let star of [1, 2, 3, 4, 5]" [value]="star">{{ star }} {{ 'STAR' | translate }}{{ star > 1 ? 's' : '' }}</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="comment-field">
+        <mat-label>{{ 'COMMENT' | translate }}</mat-label>
+        <textarea matInput [(ngModel)]="comment"></textarea>
+    </mat-form-field>
+    <button mat-raised-button color="primary" (click)="submitEvaluation()">{{ 'SUBMIT' | translate }}</button>
+</div>
+<div *ngIf="!isOrganizer && hasEvaluated">
+    <p>{{ 'ALREADY REVIEWED' | translate }}</p>
+</div>
+
+<div class="info-container" *ngIf="!isOrganizer && !isObserver">
+    <div class="info-style" [ngClass]="{ won: hasWon, lost: !hasWon }">
+        <div>
+            <h4>
+                {{
+                    hasWon
+                        ? currentLanguage === 'FR'
+                            ? 'Vous avez gagné!'
+                            : 'You won!'
+                        : currentLanguage === 'FR'
+                        ? 'Vous avez perdu.'
+                        : 'You lost!'
+                }}
+            </h4>
+            <p>{{ hasWon ? ('VICTORY PRIZE' | translate) : ('CONSOLATION PRIZE' | translate) }} : {{ reward | currency }}</p>
+        </div>
+    </div>
+    <div class="challenge info-style" [ngClass]="{ won: challenge.isCompleted, lost: !challenge.isCompleted }">
+        <h4>
+            {{ 'CHALLENGE' | translate }}
+            {{ challenge.isCompleted ? (currentLanguage === 'FR' ? 'réussi' : 'completed') : currentLanguage === 'FR' ? 'échoué' : 'failed' }}
+        </h4>
+        <div>
+            <p>{{ challenge.description }}</p>
+            <p *ngIf="challenge.isCompleted">{{ 'REWARD' | translate }} : {{ challenge.reward | currency }}</p>
+        </div>
+    </div>
+    <div class="info-style">
+        <p>{{ 'WALLET' | translate }} : {{ wallet | currency }}</p>
+    </div>
+</div>

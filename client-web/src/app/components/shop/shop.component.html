@@ -1,0 +1,49 @@
+<div class="shop">
+    <mat-nav-list class="shop__sidebar">
+        <mat-list-item (click)="selectSection(avatarCategory)" [class.selected]="activeSection === avatarCategory">{{
+            avatarCategory
+        }}</mat-list-item>
+        <mat-list-item (click)="selectSection(themeCategory)" [class.selected]="activeSection === themeCategory">{{
+            currentLanguage === 'FR' ? 'Thèmes' : 'Themes'
+        }}</mat-list-item>
+    </mat-nav-list>
+
+    <div class="shop__content-container">
+        <mat-toolbar>
+            <div class="title-container">
+                <span> {{ 'SHOP' | translate }} : {{ getActiveSection() }} </span>
+                <span class="wallet"> {{ 'WALLET' | translate }} : {{ wallet | currency }} </span>
+            </div>
+            <button type="button" mat-icon-button (click)="close()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-toolbar>
+
+        <section *ngIf="activeSection === avatarCategory">
+            <h4>{{ 'OWNED AVATARS' | translate }}</h4>
+            <div class="item-container">
+                <div *ngFor="let avatar of avatars" class="item">
+                    <img [src]="getAvatar(avatar.imageUrl!)" class="avatar" />
+                    <span class="cost"> {{ avatar.cost | currency }}</span>
+                    <button *ngIf="!ownsItem(avatar)" class="purchase-btn" type="button" mat-raised-button color="primary" (click)="purchase(avatar)">
+                        {{ 'BUY' | translate }}
+                    </button>
+                    <span *ngIf="ownsItem(avatar)" class="purchase-btn"> {{ 'BOUGHT' | translate }} </span>
+                </div>
+            </div>
+        </section>
+        <section *ngIf="activeSection === themeCategory">
+            <h4>{{ 'OWNED THEMES' | translate }}</h4>
+            <div class="item-container">
+                <div *ngFor="let theme of themes" class="item">
+                    <img [src]="getTheme(theme.imageUrl!)" class="theme" />
+                    <span class="cost"> {{ theme.cost | currency }} </span>
+                    <button *ngIf="!ownsItem(theme)" class="purchase-btn" type="button" mat-raised-button color="primary" (click)="purchase(theme)">
+                        {{ 'BUY' | translate }}
+                    </button>
+                    <span *ngIf="ownsItem(theme)" class="purchase-btn"> {{ 'BOUGHT' | translate }} </span>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>

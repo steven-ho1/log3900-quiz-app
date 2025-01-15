@@ -1,55 +1,46 @@
+/* eslint-disable max-params */
 import { HttpException } from '@app/classes/http.exception';
-import { AdminController } from '@app/controllers/admin.controller';
-import { GameController } from '@app/controllers/game.controller';
+import { GameController } from '@app/controllers/game-controller/game.controller';
+import * as compression from 'compression';
 import * as cookieParser from 'cookie-parser';
 import * as cors from 'cors';
 import * as express from 'express';
 import { StatusCodes } from 'http-status-codes';
-import * as swaggerJSDoc from 'swagger-jsdoc';
-import * as swaggerUi from 'swagger-ui-express';
 import { Service } from 'typedi';
-import { HistoryController } from './controllers/history.controller';
+import { AuthController } from './controllers/auth-controller/auth-controller';
+import { HistoryController } from './controllers/history-controller/history.controller';
+import { UserController } from './controllers/user-controller/user-controller';
 
 @Service()
 export class Application {
     app: express.Application;
     private readonly internalError: number = StatusCodes.INTERNAL_SERVER_ERROR;
-    private readonly swaggerOptions: swaggerJSDoc.Options;
 
     constructor(
+        private readonly authController: AuthController,
         private readonly gameController: GameController,
-        private readonly adminController: AdminController,
         private readonly historyController: HistoryController,
+        private readonly userController: UserController,
     ) {
         this.app = express();
-
-        this.swaggerOptions = {
-            swaggerDefinition: {
-                openapi: '3.0.0',
-                info: {
-                    title: 'Cadriciel Serveur',
-                    version: '1.0.0',
-                },
-            },
-            apis: ['**/*.ts'],
-        };
-
         this.config();
-
         this.bindRoutes();
     }
 
     bindRoutes(): void {
-        this.app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerJSDoc(this.swaggerOptions)));
-        this.app.use('/api/games', this.gameController.router);
-        this.app.use('/api/admin', this.adminController.getRouter());
-        this.app.use('/api/history', this.historyController.router);
+        this.app.use('/api/auth', this.authController.getRouter());
+        this.app.use('/api/users', this.userController.getRouter());
+        this.app.use('/api/games', this.gameController.getRouter());
+        this.app.use('/api/history', this.historyController.getRouter());
+        this.app.use('/api/leaderboard', this.userController.getRouter());
+
         this.errorHandling();
     }
 
     private config(): void {
         // Middlewares configuration
-        this.app.use(express.json());
+        this.app.use(compression());
+        this.app.use(express.json({ limit: '1000mb' }));
         this.app.use(express.urlencoded({ extended: true }));
         this.app.use(cookieParser());
         this.app.use(cors());

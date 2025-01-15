@@ -1,0 +1,86 @@
+.friends {
+    display: flex;
+    height: 100%;
+    width: 100%;
+}
+.friend__sidebar {
+    background-color: lightgray;
+}
+
+.close-btn {
+    margin-left: auto;
+}
+
+.selected {
+    background-color: #7f7f7f;
+}
+
+.friend__content-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.friend__content {
+    display: flex;
+    flex-direction: column;
+}
+
+.friend__content section {
+    padding: 24px;
+}
+
+.user-list {
+    height: 300px;
+    max-height: 300px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    padding: 8px;
+    border-radius: 8px;
+}
+
+.user-result {
+    background-color: solid rgb(43, 81, 156);
+    padding: 5px 0;
+    border: 1px solid rgb(31, 71, 151);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.user-name {
+    flex: 1;
+    font-family: 'Verdana', sans-serif;
+    font-weight: bold;
+    font-size: 15px;
+    max-width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 4px;
+}
+
+.button-group {
+    display: flex;
+    gap: 8px;
+}
+.userblocked-name {
+    flex: 1;
+    font-family: 'Verdana', sans-serif;
+    font-weight: bold;
+    font-size: 15px;
+    max-width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 4px;
+    background-color: solid #808080;
+}
+
+.avatar {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    object-fit: cover;
+}

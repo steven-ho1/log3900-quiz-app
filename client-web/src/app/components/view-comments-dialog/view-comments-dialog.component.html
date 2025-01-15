@@ -1,0 +1,24 @@
+<h1 mat-dialog-title>{{ 'GAME COMMENTS' | translate }} "{{ data.game.title }}"</h1>
+<div mat-dialog-content>
+    <div *ngIf="!data.game.feedback || data.game.feedback.length === 0" class="no-comments-message">
+        <p>{{ 'NO COMMENTS' | translate }}</p>
+    </div>
+
+    <div *ngIf="data.game.feedback && data.game.feedback.length > 0">
+        <div *ngFor="let feedback of data.game.feedback; let i = index">
+            <p>
+                <strong>{{ 'RATING' | translate }} :</strong> {{ feedback.rating }} {{ 'STAR' | translate }}{{ feedback.rating > 1 ? 's' : '' }}
+            </p>
+            <p>
+                <strong>{{ 'COMMENT' | translate }} :</strong> {{ feedback.comment }}
+            </p>
+            <button *ngIf="data.isAdmin" mat-button color="warn" (click)="deleteComment(i)">Supprimer</button>
+            <mat-divider></mat-divider>
+        </div>
+    </div>
+</div>
+
+<div mat-dialog-actions class="dialog-actions">
+    <button mat-button class="action-button" (click)="closeDialog()">{{ 'RETURN' | translate }}</button>
+    <button *ngIf="data.isAdmin" mat-raised-button color="primary" (click)="closeDialog()">{{ 'SAVE' | translate }}</button>
+</div>

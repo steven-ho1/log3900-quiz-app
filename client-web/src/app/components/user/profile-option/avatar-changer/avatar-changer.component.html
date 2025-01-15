@@ -1,0 +1,40 @@
+<div class="flex-column">
+    <img [src]="getAvatarImage(selectedAvatar)" alt="Votre avatar" class="avatar-changer__choice" />
+
+    <button class="btn" *ngIf="!isEditingAvatar" mat-raised-button color="primary" id="btn" type="button" (click)="editAvatar()">
+        {{ 'MODIFY' | translate }}
+    </button>
+
+    <form *ngIf="isEditingAvatar" (ngSubmit)="onSubmit()">
+        <div class="avatar-changer__avatar-list">
+            <div
+                *ngFor="let avatar of avatars"
+                class="avatar-changer__avatar-item"
+                (click)="onAvatarSelect(avatar.imageUrl!)"
+                [class.selected]="selectedAvatar === avatar.imageUrl"
+            >
+                <img [src]="getAvatarImage(avatar.imageUrl!)" alt="Avatar" class="avatar-changer__avatar-image" />
+            </div>
+        </div>
+
+        <hr class="avatar-changer__separator" />
+
+        <div class="avatar-changer__upload-section flex-column">
+            <input #fileUploadInput type="file" accept=".png, .jpg, .jpeg" (change)="onImageUpload()" hidden />
+
+            <div class="avatar-changer__upload-button-container">
+                <button type="button" mat-mini-fab color="primary" class="upload-btn" (click)="fileUploadInput.click()">
+                    <mat-icon>attach_file</mat-icon>
+                </button>
+                <span class="avatar-changer__file-name">{{ fileName || 'NO FILE' | translate }}</span>
+            </div>
+            <span class="avatar-changer__max-file-size">[Max : 200 {{ 'KB' | translate }}]</span>
+            <p class="error">{{ errorMessage ? errorMessage : '\u00A0' }}</p>
+        </div>
+
+        <div class="btn-container">
+            <button class="btn" type="submit" mat-raised-button color="primary">{{ 'CONFIRM' | translate }}</button>
+            <button class="btn" type="button" mat-raised-button (click)="cancelEdit()">{{ 'CANCEL' | translate }}</button>
+        </div>
+    </form>
+</div>

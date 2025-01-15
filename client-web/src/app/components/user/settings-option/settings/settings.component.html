@@ -1,0 +1,82 @@
+<div class="settings">
+    <mat-nav-list class="settings__sidebar">
+        <mat-list-item (click)="selectSection(themeSection)" [class.selected]="activeSection === themeSection">{{
+            currentLanguage === 'FR' ? 'Personnalisation' : 'Personalization'
+        }}</mat-list-item>
+        <mat-list-item (click)="selectSection(authLogsSection)" [class.selected]="activeSection === authLogsSection">{{
+            currentLanguage === 'FR' ? 'Compte et sécurité' : 'Account and security'
+        }}</mat-list-item>
+    </mat-nav-list>
+
+    <div class="settings__content">
+        <mat-toolbar>
+            {{ getActiveSection() }}
+            <button type="button" mat-icon-button class="close-btn" (click)="close()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-toolbar>
+
+        <section *ngIf="activeSection === themeSection">
+            <div class="language-section">
+                <h4>{{ 'LANGUAGES' | translate }}</h4>
+                <app-duolingo></app-duolingo>
+            </div>
+            <div class="theme-section">
+                <h4>{{ 'THEMES' | translate }}</h4>
+                <div class="item-container">
+                    <div *ngFor="let theme of themes" class="item">
+                        <img [src]="getTheme(theme.imageUrl!)" class="theme" />
+                        <button
+                            class="selection-btn"
+                            type="button"
+                            mat-raised-button
+                            color="primary"
+                            [disabled]="theme.imageUrl === selectedTheme"
+                            (click)="selectTheme(theme)"
+                        >
+                            {{
+                                theme.imageUrl === selectedTheme
+                                    ? currentLanguage === 'FR'
+                                        ? 'Sélectionné'
+                                        : 'Selected'
+                                    : currentLanguage === 'FR'
+                                    ? 'Sélectionner'
+                                    : 'Select'
+                            }}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section *ngIf="activeSection === authLogsSection">
+            <div class="full-email-container">
+                <h4>{{ 'EMAIL' | translate }}</h4>
+                <div *ngIf="!isEditingEmail" class="email-container">
+                    <p class="email">{{ emailForm.value }}</p>
+                    <button class="btn" type="button" mat-raised-button color="primary" (click)="editEmail()">
+                        {{ 'MODIFY' | translate }}
+                    </button>
+                </div>
+
+                <form (ngSubmit)="onSubmit()" *ngIf="isEditingEmail" class="email-container">
+                    <mat-form-field class="email">
+                        <mat-label>{{ 'EMAIL' | translate }}</mat-label>
+                        <input [formControl]="emailForm" matInput maxlength="50" />
+                        <mat-error *ngIf="emailForm.hasError('errorMessage')">{{ emailForm.getError('errorMessage') }}</mat-error>
+                    </mat-form-field>
+
+                    <div class="btn-container">
+                        <button class="btn" type="submit" mat-raised-button color="primary" [disabled]="emailForm.invalid || !isNewEmail()">
+                            {{ 'CONFIRM' | translate }}
+                        </button>
+                        <button class="btn" type="button" mat-raised-button (click)="cancelEdit()">{{ 'CANCEL' | translate }}</button>
+                    </div>
+                </form>
+            </div>
+            <div class="auth-logs">
+                <h4>{{ 'AUTH LOGS' | translate }}</h4>
+                <app-auth-logs></app-auth-logs>
+            </div>
+        </section>
+    </div>
+</div>

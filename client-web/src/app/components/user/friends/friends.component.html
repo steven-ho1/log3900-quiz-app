@@ -1,0 +1,119 @@
+<div class="friends">
+    <mat-nav-list class="friend__sidebar">
+        <mat-list-item
+            (click)="selectSection(searchSection); filteredUsers = []; userHasTyped = false"
+            [class.selected]="activeSection === searchSection"
+            >{{ 'SEARCH USERS' | translate }}</mat-list-item
+        >
+        <mat-list-item (click)="selectSection(friendSection)" [class.selected]="activeSection === friendSection">{{
+            'FRIENDS' | translate
+        }}</mat-list-item>
+        <mat-list-item (click)="selectSection(blockedSection)" [class.selected]="activeSection === blockedSection">{{
+            'BLOCKED' | translate
+        }}</mat-list-item>
+        <mat-list-item (click)="selectSection(sentPendingSection)" [class.selected]="activeSection === sentPendingSection">{{
+            'FRIEND REQUESTS SENT' | translate
+        }}</mat-list-item>
+        <mat-list-item (click)="selectSection(receivedPendingSection)" [class.selected]="activeSection === receivedPendingSection">{{
+            'FRIEND REQUESTS RECEIVED' | translate
+        }}</mat-list-item>
+    </mat-nav-list>
+
+    <div class="friend__content-container">
+        <mat-toolbar>
+            {{ getActiveSection() }}
+            <button type="button" mat-icon-button class="close-btn" (click)="close()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-toolbar>
+
+        <div class="friend__content">
+            <!-- Section de recherche d'amis -->
+            <section *ngIf="activeSection === searchSection">
+                <mat-form-field class="search-bar" appearance="outline">
+                    <mat-label>{{ 'SEARCH' | translate }}</mat-label>
+                    <input matInput (input)="onSearch($event)" />
+                </mat-form-field>
+
+                <div *ngIf="filteredUsers.length > 0; else noResults">
+                    <div class="user-list">
+                        <div *ngFor="let user of filteredUsers" class="user-result">
+                            <div class="user-name"><img [src]="getAvatarImage(user.avatar)" alt="Avatar" class="avatar" />{{ user.username }}</div>
+                            <div class="button-group">
+                                <button mat-button color="primary" (click)="addFriend(user)">{{ 'ADD' | translate }}</button>
+                                <button mat-button color="warn" (click)="blockUser(user)">{{ 'BLOCK' | translate }}</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <ng-template #noResults>
+                    <p *ngIf="userHasTyped">{{ 'NO USER' | translate }}</p>
+                    <p *ngIf="!userHasTyped">{{ 'ENTER USER' | translate }}</p>
+                </ng-template>
+            </section>
+
+            <!-- Section de la liste d'amis -->
+            <section *ngIf="activeSection === friendSection">
+                <div class="user-list">
+                    <div *ngIf="userFriends.length > 0; else noFriendsMessage">
+                        <div *ngFor="let user of userFriends" class="user-result">
+                            <div class="user-name"><img [src]="getAvatarImage(user.avatar)" alt="Avatar" class="avatar" />{{ user.username }}</div>
+                            <div class="button-group">
+                                <button mat-button (click)="removeFriend(user)">{{ 'REMOVE' | translate }}</button>
+                                <button mat-button color="warn" (click)="blockUser(user)">{{ 'BLOCK' | translate }}</button>
+                            </div>
+                        </div>
+                    </div>
+                    <ng-template #noFriendsMessage>
+                        <h2>{{ currentLanguage === 'FR' ? 'Aucun Ami' : 'No friends yet' }}</h2>
+                    </ng-template>
+                </div>
+            </section>
+
+            <section *ngIf="activeSection === blockedSection">
+                <div class="user-list">
+                    <div *ngIf="blockedUsers.length > 0; else noBlockedMessage">
+                        <div *ngFor="let user of blockedUsers" class="user-result">
+                            <div class="user-name"><img [src]="getAvatarImage(user.avatar)" alt="Avatar" class="avatar" />{{ user.username }}</div>
+                            <div class="button-group">
+                                <button mat-button color="primary" (click)="unblockUser(user)">{{ 'UNBLOCK' | translate }}</button>
+                            </div>
+                        </div>
+                    </div>
+                    <ng-template #noBlockedMessage>
+                        <h2>{{ currentLanguage === 'FR' ? 'Aucun utilisateur bloqué' : 'No blocked user' }}</h2>
+                    </ng-template>
+                </div>
+            </section>
+            <section *ngIf="activeSection === sentPendingSection">
+                <div class="user-list">
+                    <div *ngIf="sentPendingUsers.length > 0; else noSentMessage">
+                        <div *ngFor="let user of sentPendingUsers" class="user-result">
+                            <div class="user-name"><img [src]="getAvatarImage(user.avatar)" alt="Avatar" class="avatar" />{{ user.username }}</div>
+                        </div>
+                    </div>
+                </div>
+                <ng-template #noSentMessage>
+                    <h2>{{ currentLanguage === 'FR' ? 'Aucune demande envoyée' : 'No requests sent' }}</h2>
+                </ng-template>
+            </section>
+            <section *ngIf="activeSection === receivedPendingSection">
+                <div class="user-list">
+                    <div *ngIf="receivedPendingUsers.length > 0; else noReceivedMessage">
+                        <div *ngFor="let user of receivedPendingUsers" class="user-result">
+                            <div class="user-name"><img [src]="getAvatarImage(user.avatar)" alt="Avatar" class="avatar" />{{ user.username }}</div>
+                            <div class="button-group">
+                                <button mat-button (click)="acceptFriendRequest(user)">{{ 'ACCEPT' | translate }}</button>
+                                <button mat-button color="warn" (click)="declineFriendRequest(user)">{{ 'DECLINE' | translate }}</button>
+                                <!-- <button mat-button color="warn" (click)="blockUser(user)">Bloquer</button>  si necessaire pour ux   -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <ng-template #noReceivedMessage>
+                    <h2>{{ currentLanguage === 'FR' ? 'Aucune demande reçue' : 'No requests received' }}</h2>
+                </ng-template>
+            </section>
+        </div>
+    </div>
+</div>

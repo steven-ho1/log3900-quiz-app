@@ -36,9 +36,9 @@
                 "additionalProperties": false,
                 "properties": {
                     "type": {
-                        "description": "The type of quiz. Multiple Choice (QCM) or Open Response (QRL)",
+                        "description": "The type of quiz. Multiple Choice (QCM) or Open Response (QRL) or Estimated Response (QRE)",
                         "type": "string",
-                        "enum": ["QCM", "QRL"]
+                        "enum": ["QCM", "QRL", "QRE"]
                     },
                     "text": {
                         "description": "The question itself",
@@ -68,6 +68,36 @@
                             },
                             "required": ["text", "isCorrect"]
                         }
+                    },
+                    "correctSlideAnswer": {
+                        "description": "The correct slide answer for QRE type questions",
+                        "type": "number"
+                    },
+                    "lowerBound": {
+                        "description": "The lower bound for QRE type questions",
+                        "type": "number"
+                    },
+                    "upperBound": {
+                        "description": "The upper bound for QRE type questions",
+                        "type": "number"
+                    },
+                    "toleranceMargin": {
+                        "description": "The tolerance margin for QRE type questions",
+                        "type": "number"
+                    },
+                    "qstImage": {
+                        "description": "An image associated with the question",
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "description": "The image data",
+                                "type": ["string", "null"]
+                            },
+                            "name": {
+                                "description": "The image filename",
+                                "type": ["string", "null"]
+                            }
+                        }
                     }
                 },
                 "if": {
@@ -82,11 +112,54 @@
                     "properties": {
                         "choices": {
                             "type": "null"
+                        },
+                        "correctSlideAnswer": {
+                            "type": "null"
+                        },
+                        "lowerBound": {
+                            "type": "null"
+                        },
+                        "upperBound": {
+                            "type": "null"
+                        },
+                        "toleranceMargin": {
+                            "type": "null"
                         }
                     }
                 },
                 "else": {
-                    "required": ["type", "text", "points", "choices"]
+                    "if": {
+                        "properties": {
+                            "type": {
+                                "const": "QRE"
+                            }
+                        }
+                    },
+                    "then": {
+                        "required": ["type", "text", "points", "correctSlideAnswer", "lowerBound", "upperBound", "toleranceMargin"],
+                        "properties": {
+                            "choices": {
+                                "type": "null"
+                            }
+                        }
+                    },
+                    "else": {
+                        "required": ["type", "text", "points", "choices"],
+                        "properties": {
+                            "correctSlideAnswer": {
+                                "type": "null"
+                            },
+                            "lowerBound": {
+                                "type": "null"
+                            },
+                            "upperBound": {
+                                "type": "null"
+                            },
+                            "toleranceMargin": {
+                                "type": "null"
+                            }
+                        }
+                    }
                 }
             }
         }

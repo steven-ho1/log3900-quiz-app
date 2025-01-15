@@ -1,0 +1,30 @@
+<div *ngIf="authLogs && authLogs.length > 0" class="auth-logs__container">
+    <table mat-table [dataSource]="authLogs!" class="mat-elevation-z8">
+        <ng-container [matColumnDef]="firstColumn">
+            <th mat-header-cell *matHeaderCellDef>Date</th>
+            <td mat-cell *matCellDef="let element">{{ element.timestamp }}</td>
+        </ng-container>
+
+        <ng-container [matColumnDef]="secondColumn">
+            <th mat-header-cell *matHeaderCellDef>{{ 'EVENT' | translate }}</th>
+            <td mat-cell *matCellDef="let element">
+                {{
+                    element.authEvent === 'Connexion'
+                        ? currentLanguage === 'FR'
+                            ? 'Connexion'
+                            : 'Login'
+                        : currentLanguage === 'FR'
+                        ? 'Déconnexion'
+                        : 'Logout'
+                }}
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+</div>
+<div *ngIf="authLogs && authLogs.length === 0" class="auth-logs__message-container">{{ 'EMPTY RECORD' | translate }}</div>
+<div *ngIf="!authLogs" class="auth-logs__message-container">
+    {{ authLogs === undefined ? '...' : ('LOADING ERROR' | translate) }}
+</div>

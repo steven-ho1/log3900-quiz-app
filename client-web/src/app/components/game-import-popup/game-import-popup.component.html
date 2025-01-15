@@ -1,0 +1,27 @@
+<form [formGroup]="gameForm" (ngSubmit)="onSubmit()">
+    <div [ngSwitch]="importState" class="center" id="import-state">
+        <h2>Importation de jeu</h2>
+        <p>Fichier: {{ data.fileName }}</p>
+        <div *ngSwitchCase="'ValidForm'">
+            <p>Jeu en cours de soumission</p>
+            <button type="button" mat-raised-button (click)="closeDialog()" color="primary">{{ 'CLOSE' | translate }}</button>
+        </div>
+
+        <div *ngSwitchCase="'NameExists'">
+            <div>
+                <mat-form-field id="game-title">
+                    <mat-label>Nom de jeu</mat-label>
+                    <input formControlName="title" [maxlength]="maxTitleLength" matInput />
+                </mat-form-field>
+                <p class="error" *ngIf="titleAlreadyExists()">Le nom du jeu existe déjà</p>
+                <p class="error" *ngIf="isNewTitleEmpty()">Le nom du jeu est vide</p>
+            </div>
+            <div class="nav">
+                <button type="button" mat-raised-button (click)="closeDialog()" color="primary">{{ 'CLOSE' | translate }}</button>
+                <button type="submit" mat-raised-button color="primary" id="submit" [disabled]="titleAlreadyExists() || isNewTitleEmpty()">
+                    {{ 'SUBMIT' | translate }}
+                </button>
+            </div>
+        </div>
+    </div>
+</form>

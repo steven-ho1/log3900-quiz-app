@@ -1,0 +1,223 @@
+.detached-chat {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.hidden-chat {
+    display: none;
+}
+
+:disabled {
+    cursor: default;
+}
+
+.chat button:disabled {
+    background-color: rgb(183, 183, 183);
+}
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+.chat__message-box {
+    overflow-y: auto;
+    background-color: rgb(228, 228, 228);
+    padding-bottom: 8px;
+}
+
+.chat-toolbar {
+    display: flex;
+    align-items: center;
+    background: #4887ee;
+    color: white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 1);
+    padding: 0 16px;
+}
+
+.message {
+    padding: 8px 16px;
+}
+
+.message-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.sender {
+    font-size: 14px;
+}
+
+.current-time {
+    font-size: 10px;
+    color: #3c3c3c;
+}
+
+.message-content {
+    margin-top: 0.25rem;
+    word-wrap: break-word;
+}
+
+.channel-tabs {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.slider-container {
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.channel-tabs__button-container {
+    display: flex;
+    overflow: hidden;
+}
+
+.channel-tabs__button-container button {
+    margin: 0 5px;
+    padding: 10px;
+}
+
+.button__channel-name {
+    display: inline-block;
+    width: 60px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.channel-tabs__button-container .selected {
+    background: linear-gradient(90deg, #6a11cb 0%, #2575fc 100%);
+    color: white;
+}
+
+// https://blog.hubspot.com/website/css-loading-animation
+.loader-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.chat-state {
+    margin-top: 30px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.dots::after {
+    content: '';
+    display: inline-block;
+    width: 1em;
+    text-align: left;
+    animation: dots 1.5s steps(4, end) infinite;
+}
+
+@keyframes dots {
+    0%,
+    20% {
+        content: '';
+    }
+    40% {
+        content: '.';
+    }
+    60% {
+        content: '..';
+    }
+    80%,
+    100% {
+        content: '...';
+    }
+}
+
+.chat__message-image {
+    height: 6rem;
+}
+
+.chat__input-image {
+    height: 1rem;
+}
+
+.chat__upload-error {
+    margin: 10px 0 0 0;
+    color: red;
+    padding: 5px;
+    width: fit-content;
+    background-color: rgba(red, 0.1);
+    font-size: 10px;
+}
+
+.chat__input-audio-container {
+    padding: 5px;
+    width: fit-content;
+    margin: 10px 0 0 0;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.chat__audio {
+    width: 190px;
+    height: 30px;
+}
+
+.chat__input-image-container {
+    padding: 5px;
+    width: fit-content;
+    margin: 10px 0 0 0;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.delete-media {
+    cursor: pointer;
+}
+
+.delete-media:hover {
+    color: #3c3c3c;
+}
+
+.delete-media:active {
+    color: #202020;
+}
+
+.chat-toolbar__options {
+    display: flex;
+    gap: 5px;
+}
+
+.timer {
+    font-size: 10px;
+    margin: 10px 0 0 0;
+}
+
+.toolbar__select {
+    width: 100%;
+    text-align: center;
+    font-size: 14px;
+    padding: 4px 0;
+}
+
+.detached__message-box {
+    width: 100vw;
+    flex: 1;
+}
+
+.integrated__message-box {
+    width: 400px;
+    height: 45vh;
+}
+
+.audio-icon {
+    color: #633db6;
+}

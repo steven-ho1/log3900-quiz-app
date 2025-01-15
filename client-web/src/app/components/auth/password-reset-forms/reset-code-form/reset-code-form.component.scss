@@ -1,0 +1,21 @@
+* {
+    margin: 0;
+}
+
+.code-form {
+    gap: 1rem;
+}
+
+.code-form__button-container {
+    gap: 1rem;
+}
+
+.code-form__reset-request-link {
+    cursor: pointer;
+    text-decoration: none;
+    color: black;
+}
+
+.code-form__reset-request-link:hover {
+    text-decoration: underline;
+}

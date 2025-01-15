@@ -1,0 +1,27 @@
+<form class="reset-request-form flex-column" (ngSubmit)="onSubmit()" cdkOverlayOrigin #trigger="cdkOverlayOrigin">
+    <p>{{ 'EMAIL INSTRUCTIONS' | translate }}</p>
+    <div class="flex-column">
+        <mat-form-field class="auth-input">
+            <mat-label>{{ 'EMAIL' | translate }}</mat-label>
+            <input #emailInput matInput [formControl]="emailForm" placeholder="example@example.com" name="email" type="email" maxlength="50" />
+            <mat-error *ngIf="emailForm.hasError('errorMessage')">{{ emailForm.getError('errorMessage') }}</mat-error>
+        </mat-form-field>
+    </div>
+
+    <div class="reset-request-form__button-container flex-column">
+        <button class="auth-btn" mat-raised-button color="primary" type="submit" [disabled]="emailForm.invalid || isLoading">
+            {{ 'CONTINUE' | translate }}
+        </button>
+        <button class="auth-btn" mat-raised-button routerLink="/login" type="button">{{ 'CANCEL' | translate }}</button>
+    </div>
+
+    <ng-template
+        cdkConnectedOverlay
+        [cdkConnectedOverlayOrigin]="trigger"
+        [cdkConnectedOverlayOpen]="isLoading"
+        [cdkConnectedOverlayOffsetX]="100"
+        [cdkConnectedOverlayPositions]="[{ originX: 'end', originY: 'center', overlayX: 'start', overlayY: 'center' }]"
+    >
+        <app-loader></app-loader>
+    </ng-template>
+</form>

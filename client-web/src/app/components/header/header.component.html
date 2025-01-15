@@ -1,0 +1,19 @@
+<header>
+    <div>
+        <button class="home" color="primary" mat-fab extended [routerLink]="mainMenuRoute">
+            <mat-icon>home</mat-icon>
+            {{ 'MAIN MENU' | translate }}
+        </button>
+    </div>
+
+    <div class="title">
+        <h1>{{ title }}</h1>
+    </div>
+
+    <div *ngIf="isCurrentPageLobby">
+        <button class="return" color="primary" mat-fab extended [routerLink]="isOrganizer ? gameCreationRoute : hubPickRoute">
+            <mat-icon>arrow_back</mat-icon>
+            {{ 'RETURN' | translate }}
+        </button>
+    </div>
+</header>

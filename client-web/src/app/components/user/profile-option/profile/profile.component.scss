@@ -1,0 +1,127 @@
+.profile {
+    display: flex;
+    height: 100%;
+    width: 100%;
+}
+
+.profile__sidebar {
+    background-color: lightgray;
+    width: 210px;
+    text-align: center;
+}
+
+.profile__content-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.profile__content {
+    display: flex;
+    flex-direction: column;
+}
+
+.profile__content section {
+    padding: 24px;
+}
+
+.profile__content h2 {
+    margin-bottom: 24px;
+}
+
+.profile__profile-section-content {
+    display: flex;
+}
+
+.profile__avatar {
+    flex: 1;
+}
+
+.profile__username-container {
+    flex: 1;
+}
+
+.profile__username-container h4,
+.profile__username-container p {
+    margin: 0;
+}
+
+.selected {
+    background-color: #c0c0c0;
+}
+
+.close-btn {
+    margin-left: auto;
+}
+
+.btn-container {
+    display: flex;
+    gap: 20px;
+}
+
+.btn {
+    width: 100px;
+}
+
+.profile__badges {
+    margin-top: 20px;
+
+    h4 {
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+    }
+
+    .profile__badges-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+    .profile__badge-item.completed {
+        background-color: #a5d6a7;
+        border-radius: 8px;
+        padding: 10px;
+    }
+
+    .profile__badge-item {
+        display: flex;
+        align-items: center;
+        background-color: #f7f7f7;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        width: calc(50% - 20px);
+
+        .profile__badge-image {
+            width: 60px;
+            height: 60px;
+            margin-right: 15px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .profile__badge-details {
+            .profile__badge-description {
+                font-weight: bold;
+                margin-bottom: 5px;
+            }
+
+            .profile__badge-progress {
+                font-size: 0.9rem;
+                color: #666;
+            }
+
+            .profile__badge-reward {
+                margin-bottom: 1px;
+            }
+        }
+    }
+}
+
+.btn-container {
+    display: flex;
+    gap: 20px;
+}
+
+.btn {
+    width: 100px;
+}

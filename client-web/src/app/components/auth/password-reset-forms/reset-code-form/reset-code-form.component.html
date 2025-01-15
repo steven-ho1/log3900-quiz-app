@@ -1,0 +1,27 @@
+<form class="code-form flex-column" (ngSubmit)="onSubmit()" cdkOverlayOrigin #trigger="cdkOverlayOrigin">
+    <p>{{ 'CODE INSTRUCTIONS' | translate }}</p>
+
+    <mat-form-field class="auth-input">
+        <mat-label>Code</mat-label>
+        <input #codeInput [formControl]="codeForm" maxlength="4" matInput />
+    </mat-form-field>
+
+    <a class="code-form__reset-request-link" (click)="redirectToEmailForm()">{{ 'WRONG EMAIL' | translate }}</a>
+
+    <div class="code-form__button-container flex-column">
+        <button class="auth-btn" mat-raised-button color="primary" type="submit" [disabled]="codeForm.invalid || isLoading">
+            {{ 'VERIFY' | translate }}
+        </button>
+        <button class="auth-btn" mat-raised-button routerLink="/login" type="button">{{ 'CANCEL' | translate }}</button>
+    </div>
+
+    <ng-template
+        cdkConnectedOverlay
+        [cdkConnectedOverlayOrigin]="trigger"
+        [cdkConnectedOverlayOpen]="isLoading"
+        [cdkConnectedOverlayOffsetX]="100"
+        [cdkConnectedOverlayPositions]="[{ originX: 'end', originY: 'center', overlayX: 'start', overlayY: 'center' }]"
+    >
+        <app-loader></app-loader>
+    </ng-template>
+</form>

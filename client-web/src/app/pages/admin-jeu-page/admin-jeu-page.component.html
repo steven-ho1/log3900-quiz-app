@@ -1,0 +1,96 @@
+<div class="container" [ngStyle]="backgroundImage">
+    <app-header [title]="currentLanguage === 'FR' ? 'Administration des jeux' : 'Quiz management'"></app-header>
+    <button mat-raised-button [routerLink]="historyRoute" color="primary" class="adminbutton" id="historybutton">
+        {{ 'GAME HISTORY' | translate }}
+    </button>
+
+    <div class="loader" *ngIf="isLoading">
+        <app-loader></app-loader>
+    </div>
+    <div class="fields" id="game-table">
+        <table>
+            <thead>
+                <tr>
+                    <th>{{ 'MANAGE GAME' | translate }}</th>
+                    <th class="exporter">{{ 'EXPORT' | translate }}</th>
+                    <th>{{ 'QUIZ LIST' | translate }}</th>
+                    <th>Description</th>
+                    <th>{{ 'LAST MODIFIED' | translate }}</th>
+                    <th>{{ 'VISIBILITY' | translate }}</th>
+                    <th>{{ 'STATUS' | translate }}</th>
+                    <th>{{ 'RATING' | translate }}</th>
+                    <th>{{ 'COMMENTS' | translate }}</th>
+                </tr>
+            </thead>
+            <tbody *ngIf="!isLoading">
+                <tr *ngFor="let game of filteredGames">
+                    <td class="logo-container">
+                        <a (click)="modifyGame(game)" class="logo-modif">
+                            <img src="https://cdn-icons-png.flaticon.com/512/814/814236.png" />
+                        </a>
+                        <i class="trash-delete"><mat-icon (click)="deleteGame(game)" class="icon-display">delete</mat-icon></i>
+                    </td>
+                    <td class="logo-container">
+                        <a (click)="exportGame(game.id)">
+                            <img src="https://www.freeiconspng.com/thumbs/export-icon/data-export-icon-0.png" />
+                        </a>
+                    </td>
+                    <td class="nom-jeu">
+                        <div class="game-details-container">
+                            <div>
+                                <div>{{ game.title }}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="nom-jeu">
+                        <div class="game-details-container">
+                            <div>
+                                <div class="description-jeu">{{ game.description }}</div>
+                                <div class="createur-jeu">{{ 'CREATOR' | translate }} : {{ capitalizeFirstLetter(game.creator || '') }}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>{{ game.lastModification }}</td>
+                    <td class="logo-container">
+                        <a (click)="toggleVisibility(game)">
+                            <img
+                                class="toggle-image"
+                                [src]="
+                                    game.isVisible
+                                        ? 'https://www.freeiconspng.com/thumbs/eye-icon/eyeball-icon-png-eye-icon-1.png'
+                                        : 'https://icons.veryicon.com/png/o/photographic/ant-design-official-icon-library/eye-close-1.png'
+                                "
+                            />
+                        </a>
+                    </td>
+                    <td class="logo-container">
+                        <a (click)="togglePublicState(game)">
+                            {{ game.isPublic ? 'PUBLIC' : currentLanguage === 'FR' ? 'PRIVÉ' : 'PRIVATE' }}
+                        </a>
+                    </td>
+                    <td>{{ calculateAverageRating(game) }}/5</td>
+                    <td>
+                        <button *ngIf="isCreator(game)" mat-button class="view-comments-btn compact-button" (click)="viewComments(game)">
+                            {{ 'COMMENTS' | translate }}
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="admin__add-options">
+        <button mat-raised-button color="primary" class="adminbutton" [routerLink]="quizCreationRoute">
+            <mat-icon class="icon-display">add</mat-icon>
+            {{ 'ADD NEW GAME' | translate }}
+        </button>
+
+        <button mat-raised-button (click)="gameImport.click()" color="primary" class="adminbutton">
+            <mat-icon class="icon-display">open_in_browser</mat-icon>
+            {{ 'IMPORT NEW GAME' | translate }}
+        </button>
+        <p class="error-empty" *ngIf="isFileEmpty">{{ 'EMPTY FILE' | translate }}</p>
+        <p class="error-format" *ngIf="isFormInvalid">{{ 'BAD JSON FORMAT' | translate }}</p>
+    </div>
+    <input #gameImport type="file" accept="application/JSON" (change)="importGame($event)" hidden />
+</div>

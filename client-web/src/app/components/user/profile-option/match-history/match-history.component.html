@@ -1,0 +1,20 @@
+<div *ngIf="playerStats && playerStats.completedGames.length > 0" class="history__container">
+    <table mat-table [dataSource]="playerStats.completedGames" class="mat-elevation-z8">
+        <ng-container [matColumnDef]="firstColumn">
+            <th mat-header-cell *matHeaderCellDef>Date</th>
+            <td mat-cell *matCellDef="let element">{{ element.completionDate }}</td>
+        </ng-container>
+
+        <ng-container [matColumnDef]="secondColumn">
+            <th mat-header-cell *matHeaderCellDef>{{ 'WON' | translate }}</th>
+            <td mat-cell *matCellDef="let element">{{ element.hasWon ? ('YES' | translate) : ('NO' | translate) }}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+</div>
+<div *ngIf="playerStats && playerStats.completedGames.length === 0" class="history__message-container">{{ 'EMPTY HISTORY' | translate }}</div>
+<div *ngIf="!playerStats" class="history__message-container">
+    {{ playerStats === undefined ? '...' : ('LOADING ERROR' | translate) }}
+</div>

@@ -1,0 +1,1 @@
+export const MAX_CHANNEL_NAME_LENGTH = 30;

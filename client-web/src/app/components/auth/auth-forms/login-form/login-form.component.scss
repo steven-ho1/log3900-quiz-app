@@ -1,0 +1,13 @@
+.login-form {
+    align-items: center;
+    gap: 1rem;
+}
+
+.login-form__password-reset-link {
+    text-decoration: none;
+    color: black;
+}
+
+.login-form__password-reset-link:hover {
+    text-decoration: underline;
+}

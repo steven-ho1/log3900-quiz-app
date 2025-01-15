@@ -1,0 +1,17 @@
+<form class="login-form flex-column" [formGroup]="authForm" (ngSubmit)="onSubmit()" cdkOverlayOrigin #trigger="cdkOverlayOrigin">
+    <app-credential-container></app-credential-container>
+    <button class="auth-btn" mat-raised-button color="primary" type="submit" [disabled]="!areFieldsFilled || isLoading">
+        {{ 'CONTINUE' | translate }}
+    </button>
+    <a class="login-form__password-reset-link" routerLink="/password-reset"> {{ 'PASSWORD FORGOTTEN' | translate }} </a>
+</form>
+
+<ng-template
+    cdkConnectedOverlay
+    [cdkConnectedOverlayOrigin]="trigger"
+    [cdkConnectedOverlayOpen]="isLoading"
+    [cdkConnectedOverlayOffsetX]="100"
+    [cdkConnectedOverlayPositions]="[{ originX: 'end', originY: 'center', overlayX: 'start', overlayY: 'center' }]"
+>
+    <app-loader></app-loader>
+</ng-template>

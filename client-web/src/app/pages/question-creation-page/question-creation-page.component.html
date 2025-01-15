@@ -1,0 +1,52 @@
+<div class="container" [ngStyle]="backgroundImage">
+    <app-header [title]="pageTitle"></app-header>
+
+    <div id="questions-background">
+        <h3>{{ 'QUIZ NAME' | translate }}</h3>
+        <p>{{ gameName || gameNameUnavailable }}</p>
+
+        <div cdkDropList id="questions-list" (cdkDropListDropped)="drop($event)">
+            <div
+                class="question-box"
+                [ngStyle]="setQuestionStyle(question.value)"
+                *ngFor="let question of questionsFormArray.controls; index as i"
+                cdkDrag
+            >
+                <p class="question-text">{{ i + 1 }}. {{ question.value.text }}</p>
+
+                <div class="right-section">
+                    <p>{{ getQuestionType(question.value.type) }}</p>
+
+                    <div class="setting-icon" (click)="openQuestionCreator(i)">
+                        <i class="fa-solid fa-gear fa-xl"></i>
+                    </div>
+
+                    <div (click)="deleteQuestion(i)" class="delete-icon">
+                        <i class="fa-solid fa-xmark fa-xl"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button type="button" id="question-insertion" mat-raised-button color="primary" (click)="openQuestionCreator()">
+            {{ 'ADD QUESTION' | translate }}
+        </button>
+    </div>
+
+    <div id="nav">
+        <button type="button" class="navigation" mat-raised-button color="primary" [routerLink]="quizCreationRoute">
+            {{ 'RETURN' | translate }}
+        </button>
+        <button
+            type="button"
+            class="navigation"
+            mat-raised-button
+            color="primary"
+            (click)="saveQuestions()"
+            [routerLink]="quizCreationRoute"
+            [disabled]="isEmpty()"
+        >
+            {{ 'SAVE' | translate }}
+        </button>
+    </div>
+</div>

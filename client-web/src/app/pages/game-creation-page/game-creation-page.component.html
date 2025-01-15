@@ -1,0 +1,97 @@
+<div id="container" [ngStyle]="backgroundImage">
+    <app-header [title]="currentLanguage === 'FR' ? 'Création d\'une partie' : 'Game creation'"></app-header>
+
+    <div class="loader" *ngIf="isLoading">
+        <app-loader></app-loader>
+    </div>
+    <div class="fields" *ngIf="!isLoading">
+        <div class="table-container">
+            <table *ngIf="!allGamesAreHiddenOrListIsEmpty(); else emptyList">
+                <thead>
+                    <tr>
+                        <th>{{ 'QUIZ LIST' | translate }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let game of games; index as i" (click)="selectRow(i)">
+                        <td
+                            *ngIf="game.isVisible === true && (game.isPublic || (!game.isPublic && game.creator === username))"
+                            [class.selected-game]="game.id === selectedGame?.id"
+                        >
+                            {{ game.title }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <ng-template #emptyList>
+                <div class="empty-list">{{ 'NO AVAILABLE GAME' | translate }}</div>
+            </ng-template>
+        </div>
+        <div class="game-block">
+            <div *ngIf="selectedRowIndex !== null">
+                <span>
+                    <button class="petit-button" (click)="selectRow(null)">X</button>
+                </span>
+                <div>
+                    <div class="description">
+                        <div id="underlined">Description</div>
+                        <br />
+                        <div>{{ selectedGame!.description }}</div>
+                        <br />
+                        <div id="underlined">{{ 'TIME ALLOCATED' | translate }}</div>
+                        <br />
+                        <div>{{ selectedGame!.duration }} s</div>
+                        <br />
+                        <div id="underlined">{{ 'RATING' | translate }} :</div>
+                        <br />
+                        <div>{{ calculateAverageRating(selectedGame!) }} / 5</div>
+                    </div>
+                    <div class="questions">
+                        <table>
+                            <thead>
+                                <th>Questions</th>
+                            </thead>
+                            <tbody class="question-list">
+                                <tr class="table-question" *ngFor="let question of selectedGame!.questions">
+                                    {{
+                                        question.text
+                                    }}
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div>
+                        <div>
+                            <label for="entry-fee">{{ 'ENTRY FEE' | translate }} : </label>
+                            <input type="number" id="entry-fee" min="0" [max]="feeLimit" (change)="ensureFeeLimit()" [(ngModel)]="entryFee" />
+                            <button type="button" mat-button color="accent" (click)="togglePartyState()">
+                                {{ isFriendsOnly ? ('FRIENDS ONLY' | translate) : ('OPEN TO EVERYONE' | translate) }}
+                            </button>
+                        </div>
+
+                        <div id="options">
+                            <button
+                                mat-raised-button
+                                class="create-btn"
+                                (click)="initializeGame()"
+                                [disabled]="!isEntryFeeNumber() || pressed"
+                                (click)="pressed = !pressed"
+                            >
+                                <mat-icon>videogame_asset</mat-icon>
+                                {{ 'GAME CREATION' | translate }}
+                            </button>
+                            <!-- <button mat-raised-button class="bott" (click)="initializeGame(testing)">
+                                <i class="fa-solid fa-flask-vial"></i>
+                                {{ 'TEST GAME' | translate }}
+                            </button> -->
+                            <button mat-raised-button color="primary" (click)="viewComments(selectedGame!)">
+                                {{ 'SEE COMMENTS' | translate }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

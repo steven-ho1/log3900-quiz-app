@@ -1,0 +1,90 @@
+<div class="profile">
+    <mat-nav-list class="profile__sidebar">
+        <mat-list-item (click)="selectSection(profileSection)" [class.selected]="activeSection === profileSection">{{
+            currentLanguage === 'FR' ? 'Profil' : 'Profile'
+        }}</mat-list-item>
+        <mat-list-item (click)="selectSection(statsSection)" [class.selected]="activeSection === statsSection">{{
+            currentLanguage === 'FR' ? 'Statistiques' : 'Statistics'
+        }}</mat-list-item>
+        <mat-list-item (click)="selectSection(matchHistorySection)" [class.selected]="activeSection === matchHistorySection">{{
+            currentLanguage === 'FR' ? 'Historique de parties' : 'Game history'
+        }}</mat-list-item>
+    </mat-nav-list>
+
+    <div class="profile__content-container">
+        <mat-toolbar>
+            {{ getActiveSection() }}
+            <button type="button" mat-icon-button class="close-btn" (click)="close()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-toolbar>
+
+        <div class="profile__content">
+            <section *ngIf="activeSection === profileSection">
+                <div class="profile__profile-section-content">
+                    <app-avatar-changer class="profile__avatar"></app-avatar-changer>
+                    <div class="profile__username-container">
+                        <div *ngIf="!isEditingUsername">
+                            <h4>{{ 'USERNAME' | translate }}</h4>
+                            <p>{{ usernameForm.value }}</p>
+                            <button class="btn" type="button" mat-raised-button color="primary" (click)="editUsername()">
+                                {{ 'MODIFY' | translate }}
+                            </button>
+                        </div>
+
+                        <form (ngSubmit)="onSubmit()" *ngIf="isEditingUsername">
+                            <mat-form-field class="auth-input">
+                                <mat-label>{{ 'USERNAME' | translate }}</mat-label>
+                                <input [formControl]="usernameForm" matInput name="username" type="text" maxlength="20" />
+                                <mat-error *ngIf="usernameForm.hasError('errorMessage')">{{ usernameForm.getError('errorMessage') }}</mat-error>
+                            </mat-form-field>
+
+                            <div class="btn-container">
+                                <button
+                                    class="btn"
+                                    type="submit"
+                                    mat-raised-button
+                                    color="primary"
+                                    [disabled]="usernameForm.invalid || !isNewUsername()"
+                                >
+                                    {{ 'CONFIRM' | translate }}
+                                </button>
+                                <button class="btn" type="button" mat-raised-button (click)="cancelEdit()">{{ 'CANCEL' | translate }}</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="profile__badges">
+                    <h4>Badges</h4>
+                    <div class="profile__badges-list" style="display: flex; flex-wrap: wrap; gap: 16px">
+                        <div
+                            class="profile__badge-item"
+                            *ngFor="let badge of badges"
+                            [ngClass]="{ completed: badge.userProgress === badge.goal }"
+                            style="flex: 1 1 calc(50% - 16px); box-sizing: border-box"
+                        >
+                            <img
+                                [src]="badge.imageUrl"
+                                alt="{{ currentLanguage === 'FR' ? badge.frDescription : badge.enDescription }}"
+                                class="profile__badge-image"
+                            />
+                            <div class="profile__badge-details">
+                                <p class="profile__badge-description">{{ currentLanguage === 'FR' ? badge.frDescription : badge.enDescription }}</p>
+                                <p class="profile__badge-progress">Progression : {{ badge.userProgress }} / {{ badge.goal }}</p>
+                                <p class="profile__badge-reward">{{ 'REWARD' | translate }} : ${{ badge.moneyReward }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section *ngIf="activeSection === statsSection">
+                <app-stats></app-stats>
+            </section>
+
+            <section *ngIf="activeSection === matchHistorySection">
+                <app-match-history></app-match-history>
+            </section>
+        </div>
+    </div>
+</div>

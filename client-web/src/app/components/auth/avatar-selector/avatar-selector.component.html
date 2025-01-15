@@ -1,0 +1,33 @@
+<div class="flex-column">
+    <h4>{{ 'AVATAR SELECTION' | translate }}</h4>
+
+    <div class="avatar-selector__avatar-list">
+        <div
+            *ngFor="let avatar of avatars"
+            class="avatar-selector__avatar-item"
+            (click)="onAvatarSelect(avatar.imageUrl!)"
+            [class.selected]="selectedAvatar === avatar.imageUrl"
+        >
+            <img [src]="getAvatarImage(avatar.imageUrl!)" alt="Avatar" class="avatar-selector__avatar-image" />
+        </div>
+    </div>
+
+    <hr class="avatar-selector__separator" />
+
+    <div class="avatar-selector__upload-section flex-column">
+        <input #fileUploadInput type="file" accept=".png, .jpg, .jpeg" (change)="onImageUpload()" hidden />
+
+        <div class="avatar-selector__upload-button-container">
+            <button type="button" mat-mini-fab color="primary" class="upload-btn" (click)="fileUploadInput.click()">
+                <mat-icon>attach_file</mat-icon>
+            </button>
+            <span class="avatar-selector__file-name">{{ fileName || 'NO FILE' | translate }}</span>
+        </div>
+        <span class="avatar-selector__max-file-size">[Max : 200 {{ 'KB' | translate }}]</span>
+        <p class="error">{{ errorMessage ? errorMessage : '\u00A0' }}</p>
+    </div>
+    <div class="avatar-selector__choice-section flex-column">
+        <h5>{{ 'AVATAR' | translate }}</h5>
+        <img [src]="getAvatarImage(selectedAvatar)" alt="Votre avatar" class="avatar-selector__choice" />
+    </div>
+</div>

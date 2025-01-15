@@ -1,0 +1,45 @@
+.user-menu {
+    position: fixed;
+    top: 2rem;
+    right: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.user-menu__button {
+    width: fit-content;
+    height: fit-content;
+    padding: 0.5rem 1rem;
+    border-radius: 16px;
+}
+
+.user-menu__button-content {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.user-menu__avatar {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.user-menu__username {
+    font-size: 0.95rem;
+    width: 12rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.user-menu__menu-item-list {
+    width: 325px;
+}
+
+::ng-deep {
+    .mat-mdc-menu-panel {
+        max-width: unset !important;
+    }
+}

@@ -1,0 +1,91 @@
+<div class="container" [ngStyle]="backgroundImage">
+    <div *ngIf="!showResults" class="counts-container">
+        <p>{{ 'NUMBER OF OBSERVERS' | translate }} {{ observerCount }}</p>
+        <p *ngIf="isQuestionTransition">{{ transitionMessage }} {{ transitionCount }} s!</p>
+    </div>
+    <button id="quit-button" class="navigation" mat-raised-button color="primary" (click)="abandonGame()">
+        <mat-icon id="leave-icon">exit_to_app</mat-icon> {{ 'LEAVE' | translate }}
+    </button>
+
+    <section *ngIf="!isObserver">
+        <div id="top-page">
+            <app-progress-bar *ngIf="!showResults"></app-progress-bar>
+            <div class="question-container" *ngIf="!showResults">
+                <div id="question">
+                    {{ currentQuestion }} (+{{ currentQuestionScore }} points)
+                    <span *ngIf="isCurrentQuestionQre && isOrganizer"
+                        >({{ 'ANSWER' | translate }}: {{ answer }}, {{ 'TOLERANCE' | translate }}: {{ tolerance }})</span
+                    >
+                </div>
+                <div id="pointage" *ngIf="!isOrganizer">Score: {{ score }}</div>
+            </div>
+            <div *ngIf="currentQuestionImg && !showResults"><img [src]="currentQuestionImg" class="question-image" /></div>
+            <app-button-response *ngIf="!showResults" (updateQuestionScore)="onUpdateQuestionScore($event)"></app-button-response>
+        </div>
+        <p *ngIf="!isOrganizer && isEvaluationPhase" id="evaluation-message">{{ 'QRE EVALUATION' | translate }}</p>
+        <div>
+            <div *ngIf="isOrganizer && !showResults">
+                <app-player-list [isOrganizer]="isOrganizer"></app-player-list>
+            </div>
+            <app-end-result *ngIf="showResults"></app-end-result>
+        </div>
+    </section>
+    <section *ngIf="isObserver" class="observer-container">
+        <div id="top-page" class="observer-top-page">
+            <app-progress-bar *ngIf="!showResults"></app-progress-bar>
+            <div class="question-container" *ngIf="!showResults">
+                <div id="question">{{ currentQuestion }} (+{{ currentQuestionScore }} points)</div>
+                <div *ngIf="currentQuestionImg"><img [src]="currentQuestionImg" class="question-image" /></div>
+            </div>
+            <app-button-response
+                *ngIf="!showResults && (!selectedPlayer || selectedPlayer.name !== 'Organisateur')"
+                [isObserver]="isObserver"
+                (updateQuestionScore)="onUpdateQuestionScore($event)"
+            ></app-button-response>
+        </div>
+        <div class="observer-content">
+            <div class="players-list" *ngIf="!showResults">
+                <h3 class="players-list-title">{{ 'PLAYER LIST' | translate }}</h3>
+                <ul class="players-list-items">
+                    <li
+                        *ngFor="let player of players"
+                        (click)="selectPlayer(player)"
+                        [ngClass]="{
+                            'organizer-player': player.role === 'Organisateur',
+                            'selected-player': selectedPlayer?.name === player.name,
+                            'highlighted-player': selectedPlayer?.name === player.name
+                        }"
+                        class="player-item"
+                    >
+                        {{ player.name }}
+                        <span *ngIf="player.name !== 'Organisateur' && player.activityState === 'red'">
+                            - {{ 'WAITING FOR ANSWER' | translate }}</span
+                        >
+                        <span *ngIf="player.name !== 'Organisateur' && player.activityState === 'yellow'"> - {{ 'ANSWERING' | translate }}</span>
+                        <span *ngIf="player.name !== 'Organisateur' && player.activityState === 'green'"> - {{ 'ANSWERED' | translate }}</span>
+                    </li>
+                </ul>
+            </div>
+            <div *ngIf="selectedPlayer && selectedPlayer.name !== 'Organisateur' && !showResults" class="selected-player-answer-container">
+                <h4 class="selected-player-title">{{ 'ANSWER OF' | translate }} {{ selectedPlayer.name }}</h4>
+                <p *ngIf="getPlayerQrlAnswer(selectedPlayer)" class="submitted-answer-text styled-answer">
+                    <span class="highlighted-text">{{ 'SUBMITTED TEXT ANSWER' | translate }}</span>
+                    <span class="submitted-answer">"{{ getPlayerQrlAnswer(selectedPlayer) }}"</span>
+                </p>
+                <p
+                    *ngIf="getPlayerQreAnswer(selectedPlayer) !== null && getPlayerQreAnswer(selectedPlayer) !== undefined"
+                    class="submitted-answer-text styled-answer"
+                >
+                    <span class="highlighted-text">{{ 'SUBMITTED NUMERIC ANSWER' | translate }}</span>
+                    <span class="submitted-answer">"{{ getPlayerQreAnswer(selectedPlayer) }}"</span>
+                </p>
+                <p *ngIf="getPlayerQcmAnswer(selectedPlayer)" class="submitted-answer-text styled-answer">
+                    <span class="highlighted-text">{{ 'SUBMITTED CHOICE' | translate }}</span>
+                    <span class="submitted-answer">{{ getPlayerQcmAnswer(selectedPlayer) }}</span>
+                </p>
+            </div>
+        </div>
+        <app-player-list [selectedPlayer]="selectedPlayer"></app-player-list>
+        <app-end-result *ngIf="showResults" [isObserver]="isObserver"></app-end-result>
+    </section>
+</div>

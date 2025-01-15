@@ -1,0 +1,305 @@
+.buttons-parent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.buttons-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: calc(75% - 10px);
+    align-items: center;
+}
+
+.btn {
+    flex-basis: calc(48% - 10px);
+    padding: 1%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 2%;
+    font-size: 90%;
+    border-radius: 10px;
+    border: 5px solid black;
+    background-color: white;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+#button-id {
+    font-weight: bold;
+    width: 10%;
+}
+
+#button-text {
+    width: 90%;
+}
+
+.validate-btn {
+    position: absolute;
+    bottom: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    color: white;
+    width: 20%;
+    height: 60px;
+    font-size: 100%;
+    border-radius: 20px;
+    border: 5px solid black;
+    background-color: #f75c1e;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.validate-btn:hover {
+    background-color: #f18053;
+}
+
+.validate-btn:active {
+    background-color: #ff530f;
+}
+
+.validate-btn:disabled {
+    border: 5px solid gray;
+    background-color: silver;
+    color: gray;
+    pointer-events: none;
+}
+
+.buttons-parent:focus {
+    outline: none;
+}
+
+.btn:hover:not(:disabled) {
+    background-color: #72a8ff;
+}
+
+.btn:active:not(:disabled) {
+    background-color: #2478ff;
+}
+
+.btn-selected:not(:disabled) {
+    background-color: #4d90fc;
+}
+
+.btn:disabled {
+    border: 5px solid gray;
+    background-color: silver;
+    color: gray;
+    cursor: default;
+}
+
+.highlight-correct {
+    background-color: #aaffaa !important;
+}
+
+.highlight-wrong {
+    background-color: #ffaaaa !important;
+}
+
+.correct {
+    color: green;
+}
+
+.incorrect {
+    color: red;
+}
+
+#qrl-input {
+    margin: auto;
+    font-family: 'Roboto', 'Helvetica Neue', sans-serif;
+    font-size: medium;
+    padding: 0;
+    margin-top: 1%;
+    width: 525px;
+}
+
+#answer-field {
+    width: 525px;
+}
+
+.answer-length,
+.answer-index {
+    color: white;
+    text-align: right;
+    font-size: small;
+    padding: 0;
+    margin: 0;
+}
+
+.answer-index {
+    margin-top: 2%;
+}
+
+textarea {
+    resize: none;
+}
+
+#panic-availability {
+    position: relative;
+    font-size: 12px;
+    top: 3px;
+}
+
+.question-control {
+    position: absolute;
+    bottom: 15%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+h5 {
+    margin: 0;
+    margin-bottom: 2%;
+}
+
+#evaluation-container {
+    margin-top: 5%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#answer {
+    width: 525px;
+    height: 100px;
+    font-family: 'Roboto', 'Helvetica Neue', sans-serif;
+    font-size: medium;
+    margin: 0;
+    overflow-wrap: break-word;
+    background-color: whitesmoke;
+    border: 3px solid #3f4faa;
+    border-radius: 10px;
+    text-align: left;
+    padding: 2%;
+    color: black;
+}
+
+#grade-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 5%;
+    margin-top: 2%;
+}
+
+#grade-container button {
+    font-size: large;
+    width: 150px;
+    padding: 4% 0;
+}
+
+.grade-button {
+    padding: 1%;
+    background-color: white;
+    border-radius: 10px;
+    border: 5px solid black;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.grade-button:hover:not(.btn-selected) {
+    background-color: rgb(181, 181, 181);
+}
+
+.evaluation-control {
+    margin-top: 2%;
+}
+
+.controls-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 5%;
+}
+
+.controls-container button {
+    font-size: 14px;
+    width: 250px;
+    padding: 30px 0;
+}
+
+.controls-container button:hover {
+    background-color: rgb(181, 181, 181);
+}
+
+.controls-container button:disabled {
+    background-color: silver;
+    color: gray;
+}
+
+.slider-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: #3c234a; /* Fond mauve foncé */
+    border-radius: 8px;
+    max-width: 600px;
+    margin: 0 auto;
+    margin-top: 1%;
+}
+
+mat-slider {
+    width: 100%;
+    height: 15px;
+    color: #ffd700; /* Couleur des tickmarks et du slider */
+}
+
+.slider-label {
+    margin-top: 25px;
+    font-size: 20px;
+    color: #ffd700; /* Couleur dorée pour le texte du label */
+}
+
+#player-name {
+    font-size: 20px;
+    font-weight: normal;
+    color: whitesmoke;
+}
+
+.info-container {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin: 10px;
+    align-items: center;
+}
+
+.challenge {
+    width: 300px;
+    background-color: orange;
+    padding: 0 20px;
+    border: 1px solid black;
+    border-radius: 8px;
+    color: black;
+    font-size: 14px;
+    font-weight: normal;
+}
+
+.hint-btn {
+    width: fit-content;
+}
+
+.hint-btn:disabled {
+    background-color: lightgray;
+}
+
+.organizer-btn {
+    cursor: default;
+    flex-basis: calc(48% - 10px);
+    padding: 1%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 2%;
+    font-size: 90%;
+    border-radius: 10px;
+    border: 5px solid black;
+    background-color: white;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}

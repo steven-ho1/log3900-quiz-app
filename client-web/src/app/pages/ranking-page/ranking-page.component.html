@@ -1,0 +1,44 @@
+<div class="container" [ngStyle]="backgroundImage">
+    <app-header [title]="currentLanguage === 'FR' ? 'Classement' : 'Ranking'"></app-header>
+
+    <div class="friend-option-container">
+        <button mat-raised-button color="primary" (click)="toggleShowFriend()">
+            {{ showFriendsOnly ? ('ALL USERS' | translate) : ('FRIENDS ONLY' | translate) }}
+        </button>
+    </div>
+    <div class="loader" *ngIf="isLoading">
+        <app-loader></app-loader>
+    </div>
+    <div *ngIf="!isLoading">
+        <div class="leaderboard-section" *ngIf="filteredLeaderboard.length > 0">
+            <table class="leaderboard-table">
+                <thead>
+                    <tr>
+                        <th>{{ 'PLAYER' | translate }}</th>
+                        <th (click)="sortLeaderboard('winRate')">{{ 'V/D RATIO' | translate }}</th>
+                        <th (click)="sortLeaderboard('averageTimePerGame')">{{ 'AVERAGE TIME' | translate }}</th>
+                        <th (click)="sortLeaderboard('totalCompletedChallenges')">{{ 'STAT5' | translate }}</th>
+                        <th (click)="sortLeaderboard('totalPoints')">{{ 'TOTAL POINTS' | translate }}</th>
+                        <th (click)="sortLeaderboard('totalMoney')">{{ 'TOTAL MONEY' | translate }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let player of filteredLeaderboard" [class.isPlayer]="player.username === username">
+                        <td>
+                            <div class="username">
+                                <img [src]="getAvatarImage(player.username)" alt="Avatar" class="avatar" />
+                                {{ player.username }}
+                            </div>
+                        </td>
+                        <td>{{ player.winRate | percent: '1.0-2' }}</td>
+                        <td>{{ player.averageTimePerGame | number: '1.1-2' }}</td>
+                        <td>{{ player.totalCompletedChallenges }}</td>
+                        <td>{{ player.totalPoints }}</td>
+                        <td>{{ player.totalMoney | currency }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p *ngIf="filteredLeaderboard.length === 0" class="empty-list">{{ 'EMPTY LIST' | translate }}</p>
+    </div>
+</div>

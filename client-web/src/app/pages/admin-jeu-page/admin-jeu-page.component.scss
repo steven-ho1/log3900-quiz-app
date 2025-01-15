@@ -1,0 +1,206 @@
+@import url(../main-menu-page/main-menu-page.component.scss);
+
+.container {
+    position: relative;
+}
+
+#game-table {
+    min-height: 50vh;
+}
+
+.loader {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.admin__add-options {
+    width: 100vw;
+}
+
+.fields {
+    background-color: transparent;
+    margin-top: 3%;
+    text-align: center;
+}
+
+.field {
+    width: 30%;
+    border-color: lightgray;
+    border-style: solid;
+    border-width: 1.5px;
+    height: 20px;
+    margin-bottom: 2%;
+}
+
+.field::placeholder {
+    color: lightgray;
+    vertical-align: top;
+}
+
+#description {
+    width: 50%;
+    height: 100px;
+}
+
+#time_field {
+    width: 35px;
+}
+
+.navigation {
+    position: absolute;
+    left: 5%;
+    top: 80%;
+    margin: 0%;
+    padding: 1.5%;
+    width: 150px;
+    font-size: 22px;
+}
+
+.logo-container img {
+    height: 40px;
+    cursor: pointer;
+}
+
+table {
+    border-collapse: collapse;
+    margin: 1%;
+}
+
+tbody {
+    display: block;
+    height: auto;
+    min-height: 250px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+th,
+td {
+    padding: 8px;
+    opacity: 0.9;
+}
+
+td {
+    border-bottom: 1px solid black;
+    background-color: #ffffff;
+}
+
+th {
+    border: 2px solid black;
+    background-color: #534e4e;
+    text-align: center;
+    color: #ffffff;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+th.exporter {
+    width: 10%;
+}
+
+tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+
+.adminbutton {
+    margin-left: 5%;
+    margin-top: 1%;
+    padding: 1.5%;
+    height: 60px;
+    font-size: 25px;
+}
+.compact-button {
+    font-size: 0.875rem;
+    padding: 2px 4px;
+    border-radius: 6px;
+    min-width: auto;
+    max-width: 100%;
+    text-align: center;
+    background-color: #3f51b5;
+    color: #ffffff;
+
+    &:hover {
+        background-color: #303f9f;
+    }
+}
+
+.view-comments-btn {
+    width: 100%;
+    margin: 0;
+}
+
+.adminbutton + .adminbutton {
+    margin-left: 40%;
+}
+
+.nom-jeu {
+    text-align: left;
+}
+
+.game-details-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1rem;
+}
+
+.fa-trash {
+    cursor: pointer;
+}
+
+.nom-jeu img {
+    width: 15px;
+    height: 15px;
+    margin-left: 95%;
+    cursor: pointer;
+}
+
+.description-jeu {
+    font-size: 0.8em;
+}
+.createur-jeu {
+    font-size: 0.8em;
+}
+
+p.error-empty {
+    color: red;
+    font-size: 14px;
+    background-color: rgb(red, 0.1);
+    position: absolute;
+    right: 14%;
+    bottom: 17%;
+}
+
+p.error-format {
+    color: red;
+    font-size: 14px;
+    background-color: rgb(red, 0.1);
+    position: absolute;
+    right: 9%;
+    bottom: 17%;
+}
+
+#historybutton {
+    scale: 0.9;
+    position: absolute;
+    top: 2%;
+    right: 1.5%;
+}
+
+.icon-display {
+    transform: scale(1.5);
+}
+
+.trash-delete .icon-display {
+    transform: scale(2);
+}
+.trash-delete {
+    margin-left: 10%;
+    cursor: pointer;
+}
+.logo-modif {
+    margin-right: 10%;
+}

@@ -1,0 +1,17 @@
+export enum InternalErrorMessage {
+    GamesFetchError = 'Erreur inattendue lors de la récupération des jeux.',
+    GameExportError = "Erreur inattendue lors de l'exportation du jeu.",
+    GameModificationError = 'Erreur inattendue lors de la modification du jeu.',
+    GameVisibilityModificationError = 'Erreur inattendue lors de la modification de la visibilité du jeu.',
+    GamePublicStateModificationError = 'Erreur inattendue lors de la modification du status du jeu.',
+    GameAdditionError = "Erreur inattendue lors de l'ajout du jeu.",
+    GameDeletionError = 'Erreur inattendue lors de la suppression du jeu.',
+    HistoryFetchError = "Erreur inattendue lors de la récupération de l'historique.",
+    HistoryDeletionError = "Erreur inattendue lors de la suppression de l'historique.",
+    LoginError = 'Erreur inattendue lors de la connexion au compte.',
+    RegistrationError = 'Erreur inattendue lors de la création de compte.',
+    LogoutError = 'Erreur inattendue lors de la déconnexion du compte.',
+    TokenValidationError = 'Erreur inattendue lors de la validation du token.',
+    SessionLoading = 'Erreur inattendue lors du chargement de la session.',
+    TokenRefresh = 'Erreur lors de la rotation périodique du token.',
+}

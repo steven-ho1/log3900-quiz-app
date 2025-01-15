@@ -1,0 +1,67 @@
+.wallet {
+    margin-left: 50px;
+}
+
+.shop {
+    display: flex;
+    height: 100%;
+    width: 100%;
+}
+
+.selected {
+    background-color: #c0c0c0;
+}
+
+.title-container {
+    margin-right: auto;
+}
+
+.shop__sidebar {
+    background-color: lightgray;
+    width: 210px;
+    text-align: center;
+}
+
+.shop__content-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.shop__content-container section {
+    padding: 24px;
+}
+
+.theme {
+    width: 10rem;
+}
+
+.item {
+    display: flex;
+    align-items: center;
+    padding-right: 300px;
+}
+
+.item-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-height: 350px;
+    overflow-y: auto;
+}
+.cost {
+    margin-left: 24px;
+}
+
+.purchase-btn {
+    width: 100px;
+    text-align: center;
+    margin-left: auto;
+}
+
+.avatar {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    object-fit: cover;
+}

@@ -1,0 +1,24 @@
+<!-- Component créé parce que ça prendrait du temps de changer le CSS des boutons sinon-->
+
+<div class="container justified" [ngStyle]="backgroundImage">
+    <app-user-menu (settingsClose)="onSettingsClose()"></app-user-menu>
+    <img src="./assets/logos/logo2.png" alt="Logo Projet" class="logo" />
+    <div class="option-container">
+        <section class="main-options justified">
+            <button class="btn" type="button" mat-raised-button color="primary" [routerLink]="hubPickRoute">{{ 'GAME JOINING' | translate }}</button>
+            <button class="btn" type="button" mat-raised-button color="primary" [routerLink]="gameCreationRoute">
+                {{ 'GAME CREATION' | translate }}
+            </button>
+            <button class="btn" type="button" mat-raised-button color="primary" [routerLink]="adminRoute">{{ 'QUIZ ADMIN' | translate }}</button>
+        </section>
+        <app-ranking-button></app-ranking-button>
+    </div>
+
+    <footer class="footer-item">
+        <h4 class="team-name">{{ 'TEAM' | translate }}</h4>
+        <p>
+            <span>Sofiane Mouici, </span> <span>Noah Namoko, </span> <span>Ralph El Khoury, </span> <span>Ho Xuan Steven Phuong, </span>
+            <span>Eugène Vachon, </span> <span>Gabriel Louka</span>
+        </p>
+    </footer>
+</div>

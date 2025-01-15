@@ -1,0 +1,12 @@
+<div *ngIf="loading" class="app-loading full-height">
+    <mat-spinner class="spinner"></mat-spinner>
+</div>
+<div *ngIf="!loading" class="app full-height">
+    <app-chat-box *ngIf="isAuthenticated && !isWindowDetachedChat && showChat" (detached)="onDetached()" class="chat"></app-chat-box>
+
+    <app-duolingo class="duolingo" *ngIf="!isAuthenticated && !isWindowDetachedChat"></app-duolingo>
+
+    <main class="content">
+        <router-outlet></router-outlet>
+    </main>
+</div>

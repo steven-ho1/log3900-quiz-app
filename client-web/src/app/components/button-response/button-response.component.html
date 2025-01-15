@@ -1,0 +1,136 @@
+<form *ngIf="!isOrganizer" (ngSubmit)="submit()">
+    <div *ngIf="isCurrentQuestionQcm" class="buttons-parent" (keydown)="playerEntries($event)" #buttonFocus tabindex="0" autofocus>
+        <div class="buttons-container">
+            <button
+                type="button"
+                *ngFor="let button of buttons"
+                [ngClass]="{
+                    'btn-default': !button.selected,
+                    'btn-selected': button.selected,
+                    'highlight-correct': button.showCorrectButtons,
+                    'highlight-wrong': button.showWrongButtons
+                }"
+                (click)="isObserver ? null : onButtonClick(button)"
+                class="btn"
+                [ngClass]="{ 'highlight-correct': button.showCorrectButtons, 'highlight-wrong': button.showWrongButtons }"
+                [disabled]="isObserver || (!hasQuestionEnded && button.id === hintId)"
+            >
+                <span id="button-id">{{ button.id }}</span>
+                <div id="button-text">{{ button.text }}</div>
+            </button>
+        </div>
+    </div>
+    <div *ngIf="isCurrentQuestionQre && !isEvaluationPhase" class="slider-container">
+        <mat-slider [min]="lowerBound" [max]="upperBound" [step]="1" showTickMarks discrete [disabled]="isObserver">
+            <input [formControl]="slideAnswerForm" matSliderThumb />
+        </mat-slider>
+        <mat-label class="slider-label">{{ slideAnswerForm.value }}</mat-label>
+    </div>
+    <div *ngIf="!isCurrentQuestionQcm && !isEvaluationPhase && !isCurrentQuestionQre" id="qrl-input">
+        <mat-form-field id="answer-field">
+            <mat-label>{{ 'ANSWER' | translate }}</mat-label>
+            <textarea
+                #answerInput
+                matInput
+                (input)="markInputActivity()"
+                [maxlength]="maxQrlAnswerLength"
+                [formControl]="answerForm"
+                rows="5"
+                [readonly]="isObserver"
+            >
+            </textarea>
+        </mat-form-field>
+        <p class="answer-length">{{ answerForm.value.length }}/{{ maxQrlAnswerLength }}</p>
+    </div>
+
+    <button *ngIf="!isObserver" type="submit" class="validate-btn" [disabled]="submitted || isAnswerEmpty()">{{ 'SUBMIT' | translate }}</button>
+</form>
+<div *ngIf="isOrganizer">
+    <div *ngIf="isCurrentQuestionQcm" class="buttons-parent">
+        <div class="buttons-container">
+            <button
+                type="button"
+                *ngFor="let button of buttons"
+                [ngClass]="{
+                    'highlight-correct': button.showCorrectButtons,
+                    'highlight-wrong': button.showWrongButtons
+                }"
+                class="organizer-btn"
+            >
+                <span id="button-id">{{ button.id }}</span>
+                <div id="button-text">{{ button.text }}</div>
+            </button>
+        </div>
+    </div>
+
+    <div *ngIf="!isEvaluationPhase" class="controls-container question-control">
+        <button mat-raised-button (click)="startNextQuestionCountdown()" [disabled]="!canLoadNextQuestion">{{ buttonLoadingMessage }}</button>
+        <button mat-raised-button (click)="pause()" [disabled]="hasQuestionEnded">
+            <i *ngIf="!isGamePaused" class="fa-solid fa-pause fa-2xl"></i>
+            <i *ngIf="isGamePaused" class="fa-solid fa-play fa-beat-fade fa-2xl"></i>
+            {{ pauseMessage }}
+        </button>
+        <button mat-raised-button (click)="panic()" [disabled]="!isPanicModeAvailable || isPanicModeEnabled || isGamePaused || hasQuestionEnded">
+            <div>
+                <i class="fa-solid fa-triangle-exclamation fa-2xl"></i>
+                {{ 'PANIC' | translate }}
+            </div>
+            <div *ngIf="!isPanicModeAvailable" id="panic-availability">{{ 'AVAILABLE IN' | translate }} {{ remainingCountForPanic }} s</div>
+        </button>
+    </div>
+
+    <div *ngIf="isEvaluationPhase" id="evaluation-container">
+        <div id="answer-container">
+            <h5>{{ 'PLAYER' | translate }} : {{ currentEvaluatedAnswer.submitter }}</h5>
+            <p id="answer">{{ currentEvaluatedAnswer.text }}</p>
+            <p class="answer-index">{{ currentAnswerIndex + 1 }}/{{ qrlAnswers.length }}</p>
+        </div>
+        <div id="grade-container">
+            <button
+                [ngClass]="{ 'grade-button': true, 'btn-selected': currentEvaluatedAnswer.grade === grade }"
+                (click)="evaluateAnswer(grade)"
+                *ngFor="let grade of grades"
+                mat-raised-button
+            >
+                {{ grade * 100 }}%
+            </button>
+        </div>
+        <div class="controls-container evaluation-control">
+            <button [disabled]="currentAnswerIndex === 0" (click)="getPreviousAnswer()" mat-raised-button>
+                <i class="fa-solid fa-backward fa-2xl"></i>
+                {{ 'PREVIOUS ANSWER' | translate }}
+            </button>
+            <button
+                [disabled]="currentAnswerIndex !== qrlAnswers.length - 1 || currentEvaluatedAnswer.grade === null"
+                (click)="endEvaluationPhase()"
+                mat-raised-button
+            >
+                {{ 'SUBMIT' | translate }}
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="info-container" *ngIf="isRealGame">
+    <button
+        mat-raised-button
+        type="button"
+        class="hint-btn"
+        *ngIf="!isOrganizer && !isObserver && isRealGame && buttons.length > 2 && isCurrentQuestionQcm"
+        [disabled]="!canPurchaseHint || wallet! < hintCost || hasQuestionEnded"
+        (click)="purchaseHint()"
+    >
+        {{ 'HINT' | translate }} {{ hintCost | currency }}
+    </button>
+    <div *ngIf="!isOrganizer && !isObserver" class="challenge">
+        <h4>{{ 'CHALLENGE' | translate }}</h4>
+        <div *ngIf="challenge">
+            <p>{{ challenge.description }}</p>
+            <p>{{ 'REWARD' | translate }} : {{ challenge.reward | currency }}</p>
+        </div>
+        <p *ngIf="challenge === null">{{ 'LOADING ERROR' | translate }}</p>
+    </div>
+    <p id="player-name">
+        {{ playerName === 'Organisateur' ? (currentLanguage === 'FR' ? 'Organisateur' : 'Organizer') : playerName }} | {{ wallet | currency }}
+    </p>
+</div>

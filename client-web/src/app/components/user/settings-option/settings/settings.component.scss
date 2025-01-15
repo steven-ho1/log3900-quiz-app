@@ -1,0 +1,82 @@
+.settings {
+    display: flex;
+    height: 100%;
+    width: 100%;
+}
+
+.settings__sidebar {
+    background-color: lightgray;
+    width: 210px;
+    text-align: center;
+}
+
+.settings__content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.settings__content section {
+    padding: 24px;
+}
+
+.selected {
+    background-color: #c0c0c0;
+}
+
+.close-btn {
+    margin-left: auto;
+}
+
+.theme {
+    width: 10rem;
+}
+
+.item {
+    display: flex;
+    align-items: center;
+    padding-right: 300px;
+}
+
+.item-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-height: 250px;
+    overflow-y: auto;
+}
+
+.selection-btn {
+    width: 100px;
+    text-align: center;
+    margin-left: auto;
+}
+
+section h4 {
+    margin: 0;
+    margin-bottom: 15px;
+}
+
+.theme-section {
+    margin-top: 30px;
+}
+
+.btn-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn {
+    width: 100px;
+}
+
+.email-container {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.full-email-container {
+    height: 110px;
+}

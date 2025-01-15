@@ -17,4 +17,7 @@ export enum Limit {
     QrlRequiredPanicCount = 20,
     MaxQcmAnswerLength = 100,
     MaxQrlAnswerLength = 200,
+    LowerBoundMin = 0,
+    UpperBoundMin = 1,
+    MarginTolerance = 0.25,
 }

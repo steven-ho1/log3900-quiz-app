@@ -1,0 +1,101 @@
+.table-container {
+    position: fixed;
+    top: 35%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    text-align: center;
+}
+
+table {
+    border-collapse: collapse;
+    background-color: #f9c2e3;
+    margin: auto;
+}
+
+th,
+td {
+    border: 1px solid #8d3987;
+    padding: 8px;
+    text-align: middle;
+    font-size: 0.9em;
+    word-break: break-word;
+    color: #fff;
+}
+
+th {
+    background-color: #8d3987;
+}
+
+tr:nth-child(even) {
+    background-color: #390523;
+}
+
+tr:nth-child(odd) {
+    background-color: #4c0852;
+}
+
+h1 {
+    color: white;
+}
+
+.info-container {
+    position: fixed;
+    top: 30%;
+    right: 10%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.info-style {
+    padding: 20px;
+    font-size: 14px;
+    background-color: whitesmoke;
+    border: 1px solid black;
+    border-radius: 8px;
+}
+
+.won {
+    background-color: #aaffaa;
+}
+
+.lost {
+    background-color: #ffaaaa;
+}
+
+.challenge {
+    width: 300px;
+}
+.evaluation-container {
+    margin-top: 30px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+
+    h3 {
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+    }
+
+    mat-form-field {
+        width: 100%;
+        margin-bottom: 15px;
+
+        .comment-field {
+            margin-top: 10px;
+        }
+    }
+
+    button {
+        display: block;
+        margin-top: 15px;
+        background-color: #007bff;
+        color: #ffffff;
+
+        &:hover {
+            background-color: #0056b3;
+        }
+    }
+}

@@ -1,0 +1,20 @@
+<div *ngIf="playerStats" class="stats-container">
+    <div class="stat-item">
+        <strong>{{ 'STAT1' | translate }} :</strong> {{ totalGamesPlayed }}
+    </div>
+    <div class="stat-item">
+        <strong>{{ 'STAT2' | translate }} :</strong> {{ totalGamesWon }}
+    </div>
+    <div class="stat-item">
+        <strong>{{ 'STAT3' | translate }} :</strong> {{ playerStats.averageCorrectAnswersPerGame * 100 | number: '1.0-2' }}%
+    </div>
+    <div class="stat-item">
+        <strong>{{ 'STAT4' | translate }} :</strong> {{ playerStats.averageTimePerGame | number: '1.0-2' }} minutes
+    </div>
+    <div class="stat-item">
+        <strong>{{ 'STAT5' | translate }} :</strong> {{ playerStats.totalCompletedChallenges }}
+    </div>
+</div>
+<div *ngIf="!playerStats" class="stats-container">
+    {{ playerStats === undefined ? '...' : ('LOADING ERROR' | translate) }}
+</div>

@@ -1,0 +1,16 @@
+.ranking-btn {
+    border: 5px solid black;
+    padding: 25px 15px;
+    border-radius: 15px;
+
+    &:hover {
+        transform: scale(0.95);
+        background-color: #0f0a36;
+    }
+}
+
+.ranking-btn mat-icon {
+    margin: 0;
+    padding: 0;
+    transform: scale(2);
+}

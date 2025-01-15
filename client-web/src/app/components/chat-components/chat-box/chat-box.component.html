@@ -1,0 +1,135 @@
+<div [ngClass]="{ 'detached-chat': isDetached }" (mouseup)="stopRecording()" (mouseleave)="stopRecording()">
+    <mat-toolbar class="chat-toolbar" [ngStyle]="{ width: isDetached ? '100vw' : '400px' }">
+        <select
+            #channelSwitch
+            (change)="switchChannel(channelSwitch.value)"
+            [disabled]="!isReadyToReceive"
+            class="toolbar__select"
+            [title]="currentChannelName"
+        >
+            <option *ngFor="let channel of channels; let i = index" [value]="channel.channelId">
+                {{ channel.channelId === ingameChannelId ? (currentLanguage === 'FR' ? 'Canal de partie' : 'In-game channel') : channel.channelName }}
+            </option>
+        </select>
+        <span class="spacer"></span>
+        <div class="chat-toolbar__options">
+            <button *ngIf="!isDetached" mat-icon-button (click)="toggleMaximization()">
+                <mat-icon>{{ isMaximized ? 'minimize' : 'maximize' }}</mat-icon>
+            </button>
+
+            <button mat-icon-button *ngIf="isElectron && !isDetached" (click)="detachChat()">
+                <mat-icon>open_in_new</mat-icon>
+            </button>
+
+            <button mat-icon-button [matMenuTriggerFor]="menu">
+                <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="openChannelSearchDialog()" [disabled]="!isSocketConnected || isLoading">
+                    <mat-icon><mat-icon>group_add</mat-icon></mat-icon>
+                    <span>{{ 'CHANNEL JOINING' | translate }}</span>
+                </button>
+                <button mat-menu-item (click)="openCreateChannelDialog()" [disabled]="!isSocketConnected || isLoading">
+                    <mat-icon>create_new_folder</mat-icon>
+                    <span>{{ 'CHANNEL CREATION' | translate }}</span>
+                </button>
+                <button
+                    mat-menu-item
+                    (click)="leaveMembers()"
+                    [disabled]="selectedChannelId === 'Global' || selectedChannelId === ingameChannelId || !isSocketConnected || isLoading"
+                >
+                    <mat-icon>exit_to_app</mat-icon>
+                    <span>{{ 'CHANNEL LEAVING' | translate }}</span>
+                </button>
+                <button
+                    mat-menu-item
+                    (click)="deleteChannel()"
+                    [disabled]="selectedChannelId === 'Global' || selectedChannelId === ingameChannelId || !isSocketConnected || isLoading"
+                >
+                    <mat-icon color="warn">delete</mat-icon>
+                    <span>{{ 'CHANNEL DELETION' | translate }}</span>
+                </button>
+            </mat-menu>
+        </div>
+    </mat-toolbar>
+
+    <div
+        [hidden]="!isMaximized"
+        class="chat__message-box"
+        [ngClass]="{ 'detached__message-box': isDetached, 'integrated__message-box': !isDetached }"
+        #messagesContainer
+    >
+        <div *ngIf="!isLoading && isSocketConnected">
+            <div *ngFor="let message of chat" class="message">
+                <div class="message-info">
+                    <img *ngIf="message.avatar" [src]="getAvatarImage(message.avatar)" alt="Avatar" class="avatar" />
+                    <span class="sender">{{ message.sender }}</span>
+                    <span class="current-time">{{ message.time }}</span>
+                </div>
+                <div class="message-content">
+                    <span *ngIf="message.content">
+                        {{ message.content }}
+                    </span>
+                    <div *ngIf="message.imageUrl">
+                        <img [src]="message.imageUrl" alt="Image" class="chat__message-image" />
+                    </div>
+                    <div *ngIf="message.audioUrl">
+                        <audio #audioPlayer [src]="message.audioUrl" (ended)="audioPlayer.pause()"></audio>
+                        <button type="button" mat-icon-button *ngIf="audioPlayer.paused" (click)="audioPlayer.play()">
+                            <mat-icon class="audio-icon">play_arrow</mat-icon>
+                        </button>
+                        <button type="button" mat-icon-button *ngIf="!audioPlayer.paused" (click)="audioPlayer.pause()">
+                            <mat-icon class="audio-icon">pause</mat-icon>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="loader-container" *ngIf="isLoading && isSocketConnected">
+            <div class="chat-state"><span class="dots"></span></div>
+        </div>
+
+        <div *ngIf="!isSocketConnected" class="chat-state">{{ 'DISCONNECTED' | translate }}</div>
+    </div>
+
+    <form [hidden]="!isMaximized" (ngSubmit)="sendMessage()" class="message-form">
+        <input #imageUploadInput type="file" accept=".png, .jpg, .jpeg" (change)="onImageUpload()" hidden />
+
+        <mat-form-field subscriptSizing="dynamic" [ngStyle]="{ width: isDetached ? '100vw' : '400px' }">
+            <input #chatInput matInput type="text" class="chat__input" [formControl]="newMessage" placeholder="Message..." maxlength="200" />
+            <button type="button" mat-icon-button color="primary" matSuffix (mousedown)="startRecording()">
+                <mat-icon>keyboard_voice</mat-icon>
+            </button>
+            <div *ngIf="recording" class="timer">{{ 'TIME LEFT' | translate }} {{ timeLeft }} s</div>
+            <button type="button" mat-icon-button color="primary" matSuffix (click)="imageUploadInput.click()">
+                <mat-icon>image</mat-icon>
+            </button>
+            <button
+                type="submit"
+                mat-icon-button
+                color="primary"
+                matSuffix
+                [disabled]="(newMessage.invalid && !this.imageUrl && !this.audioUrl) || !isReadyToReceive || !canSend"
+            >
+                <mat-icon>send</mat-icon>
+            </button>
+            <div *ngIf="audioUrl" class="chat__input-audio-container">
+                <audio #audioMessage [src]="audioUrl" (ended)="onEnded()"></audio>
+                <button type="button" mat-icon-button *ngIf="audioMessage.paused" (click)="audioMessage.play()">
+                    <mat-icon class="audio-icon">play_arrow</mat-icon>
+                </button>
+                <button type="button" mat-icon-button *ngIf="!audioMessage.paused" (click)="audioMessage.pause()">
+                    <mat-icon class="audio-icon">pause</mat-icon>
+                </button>
+
+                <i class="fa-solid fa-xmark fa-s delete-media" (click)="removeAudio()"></i>
+            </div>
+            <div class="chat__input-image-container" *ngIf="fileName">
+                <img [src]="imageUrl" alt="Image" class="chat__input-image" />
+                <i class="fa-solid fa-xmark fa-s delete-media" (click)="removeImage()"></i>
+            </div>
+            <p class="chat__upload-error" *ngIf="errorMessage">{{ 'ERROR' | translate }} {{ errorMessage }}</p>
+        </mat-form-field>
+    </form>
+</div>

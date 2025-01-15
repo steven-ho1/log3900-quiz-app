@@ -1,0 +1,31 @@
+.app-loading {
+    background-color: lightgray;
+}
+
+.full-height {
+    min-height: 100vh;
+}
+
+.spinner {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.chat {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    z-index: 1000;
+}
+
+.content {
+    flex: 1;
+}
+
+.duolingo {
+    position: fixed;
+    right: 24px;
+    top: 24px;
+}

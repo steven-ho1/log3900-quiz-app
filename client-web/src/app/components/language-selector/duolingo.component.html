@@ -1,0 +1,4 @@
+<select #selector [(ngModel)]="selectedLanguage" (change)="switchLanguage(selector.value)">
+    <option [value]="french">{{ french }}</option>
+    <option [value]="english">{{ english }}</option>
+</select>

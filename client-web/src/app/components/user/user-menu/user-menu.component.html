@@ -1,0 +1,39 @@
+<div class="user-menu">
+    <button mat-raised-button (click)="openShop()">{{ wallet | currency }}</button>
+    <button
+        mat-raised-button
+        [matMenuTriggerFor]="menu"
+        class="user-menu__button"
+        [title]="username"
+        (menuOpened)="toggleMenuState()"
+        (menuClosed)="toggleMenuState()"
+    >
+        <div class="user-menu__button-content">
+            <img class="user-menu__avatar" [src]="getAvatarImage(avatar!)" alt="Avatar" />
+            <span class="user-menu__username">{{ username }}</span>
+            <i class="fa-solid" [ngClass]="isMenuOpen ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+        </div>
+    </button>
+
+    <mat-menu #menu="matMenu" xPosition="before">
+        <div class="user-menu__menu-item-list">
+            <button mat-menu-item (click)="openProfile()">
+                <mat-icon>person</mat-icon>
+                <span>{{ 'PROFILE' | translate }}</span>
+            </button>
+            <button mat-menu-item (click)="openSettings()">
+                <mat-icon>settings</mat-icon>
+                <span>{{ 'SETTINGS' | translate }}</span>
+            </button>
+            <button mat-menu-item (click)="openFriends()">
+                <mat-icon>group</mat-icon>
+                <span>{{ 'FRIENDS' | translate }}</span>
+            </button>
+            <mat-divider></mat-divider>
+            <button mat-menu-item (click)="logout()">
+                <mat-icon>exit_to_app</mat-icon>
+                <span>{{ 'LOGOUT' | translate }}</span>
+            </button>
+        </div>
+    </mat-menu>
+</div>

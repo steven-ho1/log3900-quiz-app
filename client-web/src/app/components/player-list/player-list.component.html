@@ -1,0 +1,38 @@
+<table *ngIf="(selectedPlayer && selectedPlayer.name === 'Organisateur') || isOrganizer">
+    <thead>
+        <tr>
+            <th>
+                <button (click)="setSortingPropertyAndSort('activityState')">{{ 'COLOR FILTER' | translate }}</button>
+            </th>
+            <th>
+                <button (click)="setSortingPropertyAndSort('name')">{{ 'NAME FILTER' | translate }}</button>
+            </th>
+            <th>
+                <button (click)="setSortingPropertyAndSort('score')">{{ 'SCORE FILTER' | translate }}</button>
+            </th>
+            <th>
+                <button (click)="toggleSortOrder()">{{ ('ORDER' | translate) + (ascendingOrder ? ' ▲ ' : ' ▼ ') }}</button>
+            </th>
+        </tr>
+        <tr>
+            <th>{{ 'PLAYER' | translate }}</th>
+            <th>Score</th>
+        </tr>
+    </thead>
+    <tbody>
+        <ng-container *ngFor="let player of players">
+            <tr *ngIf="player.name !== 'Organisateur' && player.role !== 'observer'">
+                <td>
+                    <span class="black" *ngIf="player.activityState === 'black'">{{ player.name }}</span>
+                    <span *ngIf="player.activityState !== 'black'" [ngClass]="getActivityClass(player)">{{ player.name }}</span>
+                </td>
+                <td>{{ player.score }}</td>
+                <td>
+                    <button (click)="toggleMute(player)" [disabled]="selectedPlayer && selectedPlayer.name === 'Organisateur'">
+                        <span id="lock-text">{{ player.isAbleToChat ? ('MUTE' | translate) : ('UNMUTE' | translate) }}</span>
+                    </button>
+                </td>
+            </tr>
+        </ng-container>
+    </tbody>
+</table>

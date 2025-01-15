@@ -1,0 +1,23 @@
+<div class="channel-search">
+    <h2 mat-dialog-title>{{ 'CHANNEL JOINING' | translate }}</h2>
+    <mat-dialog-content class="channel-search__content">
+        <mat-form-field class="channel-search____search-bar">
+            <mat-label>{{ 'CHANNEL SEARCH' | translate }}</mat-label>
+            <input matInput [maxLength]="maxChannelNameLength" (input)="onSearch($event)" />
+            <button type="button" mat-icon-button matSuffix>
+                <mat-icon>search</mat-icon>
+            </button>
+        </mat-form-field>
+
+        <ul *ngIf="filteredChannels.length > 0" class="channel-search__channel-list">
+            <li *ngFor="let channel of filteredChannels" class="channel-search__channel">
+                <div [title]="channel.channelName">{{ channel.channelName }}</div>
+                <button mat-raised-button color="primary" (click)="joinChannel(channel)">{{ 'JOIN' | translate }}</button>
+            </li>
+        </ul>
+        <p *ngIf="filteredChannels.length === 0">{{ 'EMPTY LIST' | translate }}</p>
+    </mat-dialog-content>
+</div>
+<mat-dialog-actions align="end">
+    <button mat-raised-button type="button" (click)="close()" class="channel-search__close-button">{{ 'CLOSE' | translate }}</button>
+</mat-dialog-actions>

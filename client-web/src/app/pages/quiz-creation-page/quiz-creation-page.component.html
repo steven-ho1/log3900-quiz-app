@@ -1,0 +1,86 @@
+<div class="container" [ngStyle]="backgroundImage">
+    <app-header [title]="pageTitle"></app-header>
+    <form class="fields" [formGroup]="gameForm">
+        <label for="nameField">{{ 'QUIZ NAME' | translate }}</label
+        ><br />
+        <input
+            #titleInput
+            [ngClass]="{ incorrect: isNameDuplicate || isNameEmpty }"
+            id="nameField"
+            class="field"
+            type="text"
+            [placeholder]="currentLanguage === 'FR' ? 'Nom' : 'Name'"
+            name="title"
+            (keyup)="verifyName($event)"
+            [attr.maxlength]="maxTitleLength"
+            formControlName="title"
+            (keydown.enter)="titleInput.blur()"
+            autofocus
+        />
+        <button
+            *ngIf="creatorFormValue === username || creatorFormValue === ''"
+            type="button"
+            class="state-button"
+            mat-raised-button
+            color="primary"
+            (click)="togglePublicState()"
+        >
+            {{ gameForm.get('isPublic')?.value ? 'Public' : currentLanguage === 'FR' ? 'Privé' : 'Private' }}
+        </button>
+        <br />
+        <span class="note incorrectField" *ngIf="isNameDuplicate">{{ 'NAME UNAVAILABLE' | translate }}</span>
+        <span class="note incorrectField" *ngIf="isNameEmpty">{{ 'NAME REQUIRED' | translate }}</span>
+        <span class="note" id="charCounterName">{{ gameForm.value.title.length }}/{{ maxTitleLength }}</span>
+        <br />
+        <br />
+        <label for="description">Description</label><br />
+        <textarea
+            [ngClass]="{ incorrect: isDescEmpty }"
+            class="field"
+            id="description"
+            type="text"
+            placeholder="Description..."
+            name="description"
+            [maxLength]="maxDescriptionLength"
+            formControlName="description"
+            (keyup)="verifyDesc($event)"
+        ></textarea>
+        <span class="note incorrectField" *ngIf="isDescEmpty">{{ 'DESCRIPTION REQUIRED' | translate }}</span>
+        <br />
+        <span class="note" id="charCounterDesc">{{ gameForm.value.description.length }}/{{ maxDescriptionLength }}</span
+        ><br />
+        <label for="time_field">{{ 'QCM TIME' | translate }}</label
+        ><br />
+        <input
+            #durationInput
+            [ngClass]="{ incorrect: isTimerInvalid }"
+            class="field"
+            id="time_field"
+            type="number"
+            name="time"
+            value="qcmTime"
+            formControlName="duration"
+            min="10"
+            max="60"
+            (keydown.enter)="durationInput.blur()"
+            (change)="verifyTimer($event)"
+        />
+        <p id="units">{{ 'SECONDS' | translate }}</p>
+        <br /><span class="note incorrectField" *ngIf="isTimerInvalid">{{ 'INVALID TIME' | translate }}</span>
+        <p class="note">{{ 'QUESTION NOTE' | translate }}</p>
+        <button type="button" class="questions-button" mat-raised-button color="primary" (click)="accessQuestionCreation()">
+            {{ 'MODIFY QUESTIONS' | translate }}
+        </button>
+        <button type="button" mat-raised-button color="primary" class="navigation" [routerLink]="adminRoute">{{ 'RETURN' | translate }}</button>
+        <button
+            (click)="onSubmit()"
+            type="submit"
+            mat-raised-button
+            color="primary"
+            class="navigation"
+            [disabled]="!(gameForm.valid && !isNameDuplicate && !isNameEmpty && !isDescEmpty && !isTimerInvalid && hasQuestions())"
+        >
+            {{ 'SUBMIT' | translate }}
+        </button>
+    </form>
+</div>

@@ -1,4 +1,4 @@
-import { Route } from '../client/src/app/constants/enums';
+import { Route } from '../client-web/src/app/constants/enums';
 
 export enum GameMode {
     Testing = Route.InGame,

@@ -13,14 +13,21 @@ export const indexFind = -1;
 
 export interface LobbyDetails {
     isLocked: boolean;
+    started: boolean;
     players: Player[];
     bannedNames?: string[];
     game?: Game;
     bonusRecipient?: string;
     histogram?: { [key: string]: number };
-    chat: Message[];
     qrlAnswers: Answer[];
+    qreAnswers: QreAnswer[];
+    qcmAnswers: QcmAnswer[];
     currentQuestionType?: QuestionType;
+    currentQuestionNumber?: number;
+    pin: Pin;
+    entryFee: number;
+    entryFeeSum: number;
+    friendOnly: boolean;
 }
 export enum PlayerColor {
     Red = 'red',
@@ -37,12 +44,8 @@ export interface Player {
     activityState: PlayerColor;
     isAbleToChat: boolean;
     isTyping: boolean;
-}
-
-export interface Message {
-    sender: string;
-    content: string;
-    time: string;
+    avatar?: string;
+    role?: string;
 }
 
 export interface Answer {
@@ -51,4 +54,14 @@ export interface Answer {
     isCorrect?: boolean;
     text?: string;
     grade: number | null;
+}
+export interface QreAnswer {
+    submitter: string;
+    questionType: QuestionType.QRE;
+    value: number;
+}
+export interface QcmAnswer {
+    submitter: string;
+    questionType: QuestionType.QCM;
+    selectedChoices?: string[];
 }

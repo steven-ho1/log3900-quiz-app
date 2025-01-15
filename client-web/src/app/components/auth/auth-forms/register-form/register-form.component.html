@@ -1,0 +1,39 @@
+<form class="register-form flex-column" [formGroup]="authForm" (ngSubmit)="onSubmit()" cdkOverlayOrigin #trigger="cdkOverlayOrigin">
+    <div class="flex-column">
+        <app-credential-container [isRegiserForm]="true"></app-credential-container>
+
+        <mat-form-field class="auth-input">
+            <mat-label>{{ 'CONFIRM PASSWORD' | translate }}</mat-label>
+            <input matInput [formControl]="confirmationForm" [type]="showPassword ? 'text' : 'password'" autocomplete="new-password" />
+            <button type="button" mat-icon-button matSuffix (click)="showPassword = !showPassword">
+                <mat-icon>{{ showPassword ? 'visibility' : 'visibility_off' }}</mat-icon>
+            </button>
+            <mat-error *ngIf="confirmationForm.hasError('errorMessage')">{{ confirmationForm.getError('errorMessage') }}</mat-error>
+        </mat-form-field>
+
+        <app-avatar-selector></app-avatar-selector>
+    </div>
+
+    <div class="register-form__button-container flex-column">
+        <button
+            class="auth-btn"
+            mat-raised-button
+            color="primary"
+            type="submit"
+            [disabled]="!areFieldsFilled || !isPasswordValid || confirmationForm.invalid || isLoading"
+        >
+            {{ 'CONTINUE' | translate }}
+        </button>
+        <button class="auth-btn" mat-raised-button routerLink="/login" type="button">{{ 'CANCEL' | translate }}</button>
+    </div>
+</form>
+
+<ng-template
+    cdkConnectedOverlay
+    [cdkConnectedOverlayOrigin]="trigger"
+    [cdkConnectedOverlayOpen]="isLoading"
+    [cdkConnectedOverlayOffsetX]="100"
+    [cdkConnectedOverlayPositions]="[{ originX: 'end', originY: 'center', overlayX: 'start', overlayY: 'center' }]"
+>
+    <app-loader></app-loader>
+</ng-template>
