@@ -10,7 +10,7 @@ export class DatabaseService {
 
     constructor() {
         dotenv.config();
-        const uri = process.env.CLUSTER;
+        const uri = process.env.MONGODB_URL;
 
         this.client = new MongoClient(uri, {
             serverApi: {
