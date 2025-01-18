@@ -15,7 +15,8 @@
 Trivia Theater is a web application where users can compete with each other in quiz games as well as manage quizzes.
 
 This app was originally developed as part of the second integrative project [LOG2990](https://www.polymtl.ca/programmes/cours/projet-de-logiciel-dapplication-web) at Polytechnique Montréal.
-It was further enhanced and expanded with additional features during the third integrative project [LOG3900](https://www.polymtl.ca/programmes/cours/projet-devolution-dun-logiciel). Although Android and desktop versions (desktop built with Electron) were also developed during the project, this showcase focuses solely on the web version.
+
+During the third integrative project [LOG3900](https://www.polymtl.ca/programmes/cours/projet-devolution-dun-logiciel), it was further enhanced with additional features and a desktop app using [Electron](https://www.electronjs.org/) was made.
 
 ### Built With
 

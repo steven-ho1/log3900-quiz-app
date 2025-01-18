@@ -1,12 +1,14 @@
 {
     "name": "client-web",
     "version": "1.0.0",
+    "main": "electron/main.js",
     "scripts": {
         "start": "ng serve --open",
         "build": "ng build",
         "build:dev": "ng build -c development",
-        "watch": "ng build --watch --configuration development",
-        "format": "prettier --config ../.prettierrc.yaml --ignore-path ../.prettierignore --write \"src/**/*\"",
+        "electron": "npm run build && electron electron/main.js",
+        "electron:dev": "npm run build:dev && electron electron/main.js",
+        "package": "npm run build && electron-builder",
         "test": "ng test",
         "coverage": "ng test --code-coverage --source-map=true",
         "lint": "ng lint --format stylish",
@@ -56,6 +58,8 @@
         "@types/qrcode": "^1.5.5",
         "@typescript-eslint/eslint-plugin": "^6.2.1",
         "@typescript-eslint/parser": "^6.2.1",
+        "electron": "^34.0.0",
+        "electron-builder": "^25.1.8",
         "eslint": "8.46.0",
         "eslint-config-prettier": "9.0.0",
         "eslint-import-resolver-typescript": "3.5.5",
@@ -74,5 +78,19 @@
         "prettier": "3.0.1",
         "rimraf": "^6.0.1",
         "typescript": "4.9.5"
+    },
+    "build": {
+        "appId": "com.log3900.trivia-theater",
+        "productName": "Trivia Theater",
+        "files": [
+            "dist/client-web/**/*",
+            "electron/**/*"
+        ],
+        "win": {
+            "target": [
+                "nsis"
+            ],
+            "icon": "dist/client-web/favicon.ico"
+        }
     }
 }
